@@ -1,0 +1,67 @@
+.content.profile {
+    .banner {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-image: url('../img/anime/banner.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        padding: 40px;
+
+        .avatar {
+            min-width: 180px;
+            min-height: 180px;
+            margin-right: 30px;
+        }
+
+        .info {
+            .name {
+                margin-bottom: 10px;
+            }
+
+            .group {
+                color: var(--color-white-70);
+            }
+
+            .logout {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 10px 20px;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.1s ease-in-out;
+            }
+        }
+
+        &:hover .info .logout {
+            opacity: 1;
+            pointer-events: unset;
+        }
+    }
+
+    .stats {
+        margin-top: 40px;
+
+        .box {
+            padding: 40px;
+
+            &.subscription {
+                background-image: url('../img/anime/1.png');
+
+                @media (max-width: 500px) {
+                    padding: 80px 40px;
+                }
+            }
+
+            &.balance {
+                background-image: url('../img/anime/2.png');
+            }
+        }
+
+        @media (max-width: 1040px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}

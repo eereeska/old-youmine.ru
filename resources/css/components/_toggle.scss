@@ -1,0 +1,52 @@
+.toggle {
+    position: relative;
+    padding: 40px;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: calc(50% - 20px);
+        right: 40px;
+        width: 70px;
+        height: 40px;
+        background-color: var(--color-border);
+        border-radius: 4px;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: calc(50% - 13px);
+        right: 77px;
+        width: 26px;
+        height: 26px;
+        background-color: var(--color-bg);
+        border-radius: 4px;
+        transition: right 0.3s ease-in-out;
+    }
+
+    &:not(.active):hover:after {
+        animation: toggleOnHover 0.2s ease;
+    }
+    
+    &.active {
+        &:before {
+            background-color: var(--color-green);
+        }
+
+        &:after {
+            right: 47px;
+        }
+    }
+}
+
+@keyframes toggleOnHover {
+    from {
+        right: 77px;
+    }
+    to {
+        right: 70px;
+    }
+}
