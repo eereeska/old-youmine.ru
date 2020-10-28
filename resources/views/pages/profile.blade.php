@@ -1,6 +1,14 @@
 @extends('layouts.app')
 @section('content')
 <div class="content profile">
+    @if (!$u->name or !$u->uuid)
+    <div class="box unconfirmed">
+        <a href="https://vk.com/youmine?w=app5619682_-199013527" target="_blank" class="join">
+            <h2 class="mb-20">Аккаунт не активирован</h2>
+            <p>Подайте заявку, если ещё<br>не сделали это</p>
+        </a>
+    </div>
+    @else
     <div class="box banner">
         {{-- <div class="avatar"></div> --}}
         <div class="info">
@@ -71,5 +79,6 @@
             <p>Сбрасывается при смене IP</p>
         </div>
     </div>
+    @endif
 </div>
 @endsection

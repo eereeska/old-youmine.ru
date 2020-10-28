@@ -10,7 +10,7 @@
 <body>
     <div class="home">
         <div class="logo"></div>
-        <h1 class="title">YouMine ❘ Приватный сервер Minecraft</h1>
+        <h1 class="title">Приватный сервер Minecraft</h1>
         <nav class="links">
             <a href="https://vk.com/youmine" target="_blank">ВКонтакте</a>
             <a href="https://vk.com/youmine?w=page-199013527_54995323" target="_blank">Соглашение</a>
