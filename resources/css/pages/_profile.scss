@@ -1,12 +1,21 @@
 .content.profile {
+    .unconfirmed {
+        background-image: url('../img/anime/banner2.png');
+        
+        .join {
+            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+        }
+    }
+
     .banner {
         position: relative;
         display: flex;
         align-items: center;
         background-image: url('../img/anime/banner.png');
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
         padding: 40px;
 
         .avatar {
