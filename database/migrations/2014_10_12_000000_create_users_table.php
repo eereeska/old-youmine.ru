@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('ip')->nullable();
             $table->string('reg_country')->nullable();
             $table->string('country')->nullable();
+            $table->timestamp('sub_expire_at')->useCurrent();
             $table->rememberToken();
             $table->timestamps();
         });
