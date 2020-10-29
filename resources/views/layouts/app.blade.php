@@ -9,8 +9,12 @@
 </head>
 <body>
     <nav class="content-nav text-center">
-        <a href="{{ route('home') }}">Главная</a>
-        <a href="{{ route('profile') }}" class="active">Профиль</a>
+        <a href="{{ route('home') }}" class="{{ (request()->is('/')) ? 'active' : '' }}">Главная</a>
+        <a href="{{ route('profile') }}" class="{{ (request()->is('profile')) ? 'active' : '' }}">Профиль</a>
+        
+        @if ($u->admin)
+        <a href="{{ route('admin-stats') }}" class="{{ (request()->is('admin*')) ? 'active' : '' }}"">Админка</a>
+        @endif
     </nav>
     @yield('content')
     <script src="{{ asset('js/app.js') }}"></script>

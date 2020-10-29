@@ -5,6 +5,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 $(document).on('click', '[data-action="toggle"]', function(e) {
+    e.preventDefault();
+
     var clickedElement = $(this);
 
     if (clickedElement.data('toggle-type') == 'request') {

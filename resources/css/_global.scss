@@ -87,6 +87,7 @@
     --color-border: #272934;
     --color-black: #181920;
     --color-green: #549E83;
+    --color-red: #834E4E;
     --color-gold: #FFBB55;
     --color-blue: #7677EA;
     --color-blue-70: rgba(118, 119, 234, 0.7);
@@ -116,17 +117,6 @@ body {
 
     @media (max-width: 1040px) {
         padding: 0 40px;
-    }
-}
-
-@keyframes pageTransitionIn {
-    from {
-        transform: translateY(-15px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0px);
-        opacity: 1;
     }
 }
 
@@ -204,8 +194,35 @@ input {
     }
 }
 
+table {
+    width: 100%;
+    transition: opacity 0.2s ease-in-out;
+
+    &.loading {
+        opacity: 0.4;
+    }
+
+    thead th {
+        color: var(--color-white-70);
+        font-weight: 400;
+        padding-bottom: 20px;
+    }
+
+    tbody td {
+        padding-bottom: 20px;
+    }
+}
+
+.text-left {
+    text-align: left;
+}
+
 .text-center {
     text-align: center;
+}
+
+.text-right {
+    text-align: right;
 }
 
 .mt-40 {
@@ -244,7 +261,50 @@ input {
     max-width: var(--content-max-width);
     padding: 40px 0;
     margin: 0 auto;
-    animation: pageTransitionIn 1s ease-in-out;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.avatar {
+    min-width: 60px;
+    min-height: 60px;
+    width: 60px;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-right: 20px;
+}
+
+.flex {
+    display: flex;
+
+    &.ail {
+        align-items: flex-start;
+    }
+
+    &.aic {
+        align-items: center;
+    }
+
+    &.air {
+        align-items: flex-end;
+    }
+
+    &.jcl {
+        justify-content: flex-start;
+    }
+
+    &.jcc {
+        justify-content: center;
+    }
+
+    &.jcr {
+        justify-content: flex-end;
+    }
+}
+
+.gap-20 {
+    gap: 20px;
 }
 
 .box-group {
@@ -354,5 +414,27 @@ input {
         background-size: 24px;
         backdrop-filter: blur(15px);
         transition: all 0.15s ease-in-out;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(-15px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutDown {
+    from {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(15px);
+        opacity: 0;
     }
 }

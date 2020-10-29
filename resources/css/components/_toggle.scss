@@ -26,10 +26,6 @@
         border-radius: 100px;
         transition: right 0.3s ease-in-out;
     }
-
-    &:not(.active):hover:after {
-        animation: toggleOnHover 0.2s ease;
-    }
     
     &.active {
         &:before {
@@ -39,14 +35,5 @@
         &:after {
             right: 47px;
         }
-    }
-}
-
-@keyframes toggleOnHover {
-    from {
-        right: 77px;
-    }
-    to {
-        right: 70px;
     }
 }

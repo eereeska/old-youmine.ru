@@ -22,7 +22,7 @@ class UnitPayController extends Controller
         '52.19.56.234'
     ];
 
-    public function getResult(Request $request)
+    public function check(Request $request)
     {
         if (empty($request->method) || empty($request->params) || !is_array($request->params)) {
             return $this->getResponseError('Invalid request');

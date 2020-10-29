@@ -38,6 +38,9 @@ class VKController extends Controller
             }
 
             $user->vk_link = $vk_info['domain'];
+            $user->vk_first_name = $vk_info['first_name'];
+            $user->vk_last_name = $vk_info['last_name'];
+            $user->vk_avatar = $vk_info['photo_max_orig'];
             $user->ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $request->ip();
             $user->last_login_at = now();
 

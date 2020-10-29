@@ -1,0 +1,43 @@
+.button {
+    text-align: center;
+    font-weight: 600;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid transparent;
+    padding: 15px 30px;
+    transition: background-color 0.1s ease-in-out, transform 0.1s linear, opacity 0.1s ease-in-out, background-image 0.1s ease-in-out;
+    cursor: pointer;
+
+    &.md {
+        padding: 24px 40px;
+    }
+
+    &.lg {
+        padding: 30px 60px;
+    }
+
+    &.green {
+        background-color: var(--color-green);
+    }
+
+    &.red {
+        background-color: var(--color-red);
+    }
+
+    &.loading {
+        color: transparent;
+        background-image: url('../img/loading.svg');
+        background-size: 24px;
+        opacity: 0.7;
+        cursor: default;
+    }
+
+    &:not(.loading):hover {
+        transform: translateY(-2px);
+    }
+
+    &:not(.loading):active {
+        transform: translateY(0px);
+    }
+}
