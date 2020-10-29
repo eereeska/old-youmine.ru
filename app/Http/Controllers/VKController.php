@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Stevebauman\Location\Facades\Location;
 
 class VKController extends Controller
 {
@@ -13,10 +14,10 @@ class VKController extends Controller
     const VK_CLIENT_ID = 7595518;
     const VK_SECRET = 'cqpCZzpjhUSa4g5XOH7h';
 
-    public function login(Request $request)
+    public function login(Request $r)
     {
-        if ($request->has('code')) {
-            $token = json_decode(file_get_contents('https://oauth.vk.com/access_token?client_id=' . self::VK_CLIENT_ID . '&client_secret=' . self::VK_SECRET . '&redirect_uri=' . env('VK_REDIRECT', 'http://youmine.loc/login') . '&code=' . $request->code), true);
+        if ($r->has('code')) {
+            $token = json_decode(file_get_contents('https://oauth.vk.com/access_token?client_id=' . self::VK_CLIENT_ID . '&client_secret=' . self::VK_SECRET . '&redirect_uri=' . env('VK_REDIRECT', 'http://youmine.loc/login') . '&code=' . $r->code), true);
 
             if (isset($token['error'])) {
                 return redirect('/');
@@ -28,21 +29,25 @@ class VKController extends Controller
                 return redirect('/');
             }
 
+            $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $r->ip();
+            $country = Location::get($ip);
+
             $vk_info = $data['response'][0];
 
-            $user = User::where('vk_id', $token['user_id'])->first();
+            $user = User::where('vk_id', $vk_info['id'])->first();
 
             if (!$user) {
                 $user = new User();
                 $user->vk_id = $vk_info['id'];
+                $user->reg_ip = $ip;
+                $user->reg_country = $country !== false ? $country->countryCode : null;
             }
 
-            $user->vk_link = $vk_info['domain'];
             $user->vk_first_name = $vk_info['first_name'];
             $user->vk_last_name = $vk_info['last_name'];
             $user->vk_avatar = $vk_info['photo_max_orig'];
-            $user->ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $request->ip();
-            $user->last_login_at = now();
+            $user->country = $country !== false ? $country->countryCode : null;
+            $user->ip = $ip;
 
             $user->save();
 

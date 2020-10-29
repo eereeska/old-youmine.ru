@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'env' => 'production',
+    'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Stevebauman\Location\LocationServiceProvider::class,
+
     ],
 
     /*
@@ -227,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Location' => Stevebauman\Location\LocationServiceProvider::class,
     ],
 
 ];
