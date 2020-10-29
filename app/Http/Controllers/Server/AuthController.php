@@ -13,10 +13,18 @@ class AuthController extends Controller
         $user = User::where('name', $r->name)->first();
 
         if (!$user) {
-            return response()->json([
-                'allow' => false,
-                'message' => ''
-            ]);
+            $user_without_name = User::where('ip', $r->ip)->where('name', null)->first();
+
+            if (!$user_without_name) {
+                return response()->json([
+                    'allow' => false,
+                    'message' => 'хз'
+                ]);
+            } else {
+                $user = $user_without_name;
+                $user->name = $r->name;
+                $user->save();
+            }
         }
 
         if ((!$user->admin and !$user->moderator) and $user->sub_expire_at->lte(now())) {
