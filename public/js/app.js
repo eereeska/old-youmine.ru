@@ -13031,6 +13031,10 @@ $(document).on('click', '[data-action="toggle"]', function (e) {
     });
   }
 });
+$(document).on('click', '[data-action="submit-form"]', function (e) {
+  e.preventDefault();
+  $('#' + $(this).data('form')).trigger('submit');
+});
 
 /***/ }),
 
@@ -13041,9 +13045,9 @@ $(document).on('click', '[data-action="toggle"]', function (e) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\OpenServer\domains\youmine.loc\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! F:\OpenServer\domains\youmine.loc\resources\css\app.scss */"./resources/css/app.scss");
-module.exports = __webpack_require__(/*! F:\OpenServer\domains\youmine.loc\resources\css\home.scss */"./resources/css/home.scss");
+__webpack_require__(/*! E:\OpenServer\domains\youmine.loc\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! E:\OpenServer\domains\youmine.loc\resources\css\app.scss */"./resources/css/app.scss");
+module.exports = __webpack_require__(/*! E:\OpenServer\domains\youmine.loc\resources\css\home.scss */"./resources/css/home.scss");
 
 
 /***/ })

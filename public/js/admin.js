@@ -129,7 +129,7 @@ $('#search-query').on('keyup', function (e) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\OpenServer\domains\youmine.loc\resources\js\admin.js */"./resources/js/admin.js");
+module.exports = __webpack_require__(/*! E:\OpenServer\domains\youmine.loc\resources\js\admin.js */"./resources/js/admin.js");
 
 
 /***/ })

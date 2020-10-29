@@ -11,11 +11,15 @@
     <nav class="content-nav text-center">
         <a href="{{ route('home') }}" class="{{ (request()->is('/')) ? 'active' : '' }}">Главная</a>
         <a href="{{ route('profile') }}" class="{{ (request()->is('profile')) ? 'active' : '' }}">Профиль</a>
+        <a href="{{ route('logout') }}">Выйти</a>
         
         @if ($u->admin)
         <a href="{{ route('admin-stats') }}" class="{{ (request()->is('admin*')) ? 'active' : '' }}"">Админка</a>
         @endif
     </nav>
+    @if ($errors->any())
+    <div class="alert red">{{ $errors->first() }}</div>
+    @endif
     @yield('content')
     <script src="{{ asset('js/app.js') }}"></script>
 </body>

@@ -16,6 +16,7 @@ Route::get('/unitpay/check', [UnitPayController::class, 'check']);
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile-update');
 });
 
 Route::group(['prefix' => 'front', 'middleware' => 'auth'], function() {

@@ -25,3 +25,9 @@ $(document).on('click', '[data-action="toggle"]', function(e) {
         });
     }
 });
+
+$(document).on('click', '[data-action="submit-form"]', function(e) {
+    e.preventDefault();
+    
+    $('#' + $(this).data('form')).trigger('submit');
+});

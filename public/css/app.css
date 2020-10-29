@@ -107,56 +107,18 @@ h3 {
   margin-bottom: 20px;
 }
 
+h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+b {
+  font-weight: 600;
+}
+
 span.coins {
   color: var(--color-gold);
-}
-
-input {
-  font-family: "Nunito", Arial, Helvetica, sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  color: var(--color-white);
-  width: 100%;
-  background: unset;
-  background-color: unset;
-  border: unset;
-  padding-bottom: 15px;
-  outline: unset;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-          appearance: none;
-  margin: 0;
-}
-
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-input::-moz-placeholder {
-  color: var(--color-white-50);
-}
-
-input:-ms-input-placeholder {
-  color: var(--color-white-50);
-}
-
-input::placeholder {
-  color: var(--color-white-50);
-}
-
-input.underline {
-  border-bottom: 2px solid var(--color-bg-50);
-  transition: border-bottom 0.2s ease-in-out;
-}
-
-input.underline:focus {
-  border-bottom: 2px solid var(--color-white-70);
 }
 
 table {
@@ -239,6 +201,19 @@ table tbody td {
   background-size: cover;
   background-position: center;
   margin-right: 20px;
+}
+
+.alert {
+  max-width: var(--content-max-width);
+  padding: 40px;
+  margin: 40px auto 0 auto;
+  -webkit-animation: fadeInUp 1s ease-in-out;
+          animation: fadeInUp 1s ease-in-out;
+}
+
+.alert.red {
+  color: var(--color-white);
+  background-color: var(--color-red);
 }
 
 .flex {
@@ -378,7 +353,7 @@ table tbody td {
   bottom: 0;
   left: 0;
   background-color: var(--color-bg-70);
-  background-image: url(/images/loading.svg?7b4a82efb7c2733637a443f01dc1ad06);
+  background-image: url(/images/loading.svg?529be3ec5cd3ce949ef769b26fae6260);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 24px;
@@ -467,6 +442,66 @@ table tbody td {
   background-color: var(--color-white);
 }
 
+input[type=text],
+input[type=number] {
+  font-family: "Nunito", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--color-white);
+  width: 100%;
+  background: unset;
+  background-color: unset;
+  border: unset;
+  padding-bottom: 15px;
+  outline: unset;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+input[type=text]::-webkit-outer-spin-button,
+input[type=text]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+          appearance: none;
+  margin: 0;
+}
+
+input[type=text][type=number],
+input[type=number][type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type=text]::-moz-placeholder, input[type=number]::-moz-placeholder {
+  color: var(--color-white-50);
+}
+
+input[type=text]:-ms-input-placeholder, input[type=number]:-ms-input-placeholder {
+  color: var(--color-white-50);
+}
+
+input[type=text]::placeholder,
+input[type=number]::placeholder {
+  color: var(--color-white-50);
+}
+
+input[type=text].underline,
+input[type=number].underline {
+  border-bottom: 2px solid var(--color-bg-50);
+  transition: border-bottom 0.2s ease-in-out;
+}
+
+input[type=text].underline:focus,
+input[type=number].underline:focus {
+  border-bottom: 2px solid var(--color-white-70);
+}
+
+input[type=text].lg,
+input[type=number].lg {
+  padding: 40px;
+}
+
 .toggle {
   position: relative;
   padding: 40px;
@@ -535,7 +570,7 @@ table tbody td {
 
 .button.loading {
   color: transparent;
-  background-image: url(/images/loading.svg?7b4a82efb7c2733637a443f01dc1ad06);
+  background-image: url(/images/loading.svg?529be3ec5cd3ce949ef769b26fae6260);
   background-size: 24px;
   opacity: 0.7;
   cursor: default;
@@ -549,16 +584,65 @@ table tbody td {
   transform: translateY(0px);
 }
 
-.content.profile .unconfirmed {
-  background-image: url(/images/banner2.png?dad6860e1f077d2bf19c4678c69a0e5e);
+.select-radio {
+  position: relative;
+  display: block;
+  padding-left: 33px;
+  cursor: pointer;
 }
 
-.content.profile .unconfirmed .join {
-  display: block;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px;
+.select-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.select-radio input:checked ~ .btn {
+  background-color: var(--color-green);
+}
+
+.select-radio input:checked ~ .btn:after {
+  top: calc(50% - 2px);
+  left: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--color-white);
+}
+
+.select-radio input:checked ~ span {
+  color: var(--color-white);
+}
+
+.select-radio .btn {
+  position: absolute;
+  top: calc(50% - 9px);
+  left: 0;
+  width: 18px;
+  height: 18px;
+  background-color: var(--color-border);
+  border-radius: 50%;
+  transition: all 0.1s ease-in-out;
+}
+
+.select-radio .btn:after {
+  content: "";
+  position: absolute;
+  transition: all 0.1s ease-in-out;
+}
+
+.select-radio span {
+  color: var(--color-white-70);
+  transition: all 0.1s ease-in-out;
+}
+
+.select-radio + .select-radio {
+  margin-top: 20px;
+}
+
+.content.profile .noname {
+  background-image: url(/images/banner2.png?dad6860e1f077d2bf19c4678c69a0e5e);
+  padding: 40px;
 }
 
 .content.profile .banner {
@@ -581,21 +665,6 @@ table tbody td {
 
 .content.profile .banner .info .group {
   color: var(--color-white-70);
-}
-
-.content.profile .banner .info .logout {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px 20px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.1s ease-in-out;
-}
-
-.content.profile .banner:hover .info .logout {
-  opacity: 1;
-  pointer-events: unset;
 }
 
 .content.profile .stats {
@@ -624,5 +693,9 @@ table tbody td {
   .content.profile .stats {
     grid-template-columns: 1fr;
   }
+}
+
+.content.profile .gender {
+  padding: 40px;
 }
 

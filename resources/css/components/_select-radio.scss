@@ -1,0 +1,55 @@
+.select-radio {
+    position: relative;
+    display: block;
+    padding-left: 33px;
+    cursor: pointer;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+
+        &:checked ~ .btn {
+            background-color: var(--color-green);
+
+            &:after {
+                top: calc(50% - 2px);
+                left: 7px;
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background-color: var(--color-white);
+            }
+        }
+
+        &:checked ~ span {
+            color: var(--color-white);
+        }
+    }
+
+    .btn {
+        position: absolute;
+        top: calc(50% - 9px);
+        left: 0;
+        width: 18px;
+        height: 18px;
+        background-color: var(--color-border);
+        border-radius: 50%;
+        transition: all 0.1s ease-in-out;
+
+        &:after {
+            content: '';
+            position: absolute;
+            transition: all 0.1s ease-in-out;
+        }
+    }
+
+    span {
+        color: var(--color-white-70);
+        transition: all 0.1s ease-in-out;
+    }
+}
+
+.select-radio + .select-radio {
+    margin-top: 20px;
+}

@@ -1,15 +1,8 @@
 .content.profile {
     
-    .unconfirmed {
+    .noname {
         background-image: url('../img/anime/banner2.png');
-        
-        .join {
-            display: block;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 60px;
-        }
+        padding: 40px;
     }
 
     .banner {
@@ -33,21 +26,6 @@
             .group {
                 color: var(--color-white-70);
             }
-
-            .logout {
-                position: absolute;
-                top: 0;
-                right: 0;
-                padding: 10px 20px;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.1s ease-in-out;
-            }
-        }
-
-        &:hover .info .logout {
-            opacity: 1;
-            pointer-events: unset;
         }
     }
 
@@ -73,5 +51,9 @@
         @media (max-width: 1040px) {
             grid-template-columns: 1fr;
         }
+    }
+
+    .gender {
+        padding: 40px;
     }
 }

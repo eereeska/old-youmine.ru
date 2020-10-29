@@ -1,22 +1,20 @@
 @extends('layouts.app')
 @section('content')
 <div class="content profile">
-    @if (!$u->name or !$u->uuid)
-    <div class="box unconfirmed">
-        <a href="https://vk.com/youmine?w=app5619682_-199013527" target="_blank" class="join">
-            <h2 class="mb-20">Аккаунт не активирован</h2>
-            <p>Подайте заявку, если ещё<br>не сделали это</p>
-        </a>
+    @if (!$u->name)
+    <div class="box noname mb-40">
+        <h2 class="mb-20">Никнейм не установлен</h2>
+        <p>Войдите на сервер, чтобы<br>установить его</p>
     </div>
     @else
     <div class="box banner">
         {{-- <div class="avatar"></div> --}}
         <div class="info">
-            <h2 class="name">{{ $u->name }}</h2>
+            <h2 class="name">{{ $u->name ?? 'Ноунейм' }}</h2>
             <span class="group">{{ $u->admin ? 'Администратор' : ($u->moderator ? 'Модератор' : 'Игрок') }}</span>
-            <a href="{{ route('logout') }}" class="logout">Выйти</a>
         </div>
     </div>
+    @endif
     <div class="box-group cols-2 stats">
         <div class="box subscription">
             <div class="visible">
@@ -79,6 +77,5 @@
             <p>Сбрасывается при смене IP</p>
         </div>
     </div>
-    @endif
 </div>
 @endsection
