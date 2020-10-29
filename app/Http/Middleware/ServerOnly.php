@@ -9,7 +9,9 @@ class ServerOnly
 {
     public function handle(Request $request, Closure $next)
     {
-        if (($_SERVER['HTTP_CF_CONNECTING_IP'] ?? $request->ip()) !== '127.0.0.1') {
+        $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $request->ip();
+
+        if ($ip !== '127.0.0.1' and $ip !== '81.26.6.6') {
             abort(404);
         }
         

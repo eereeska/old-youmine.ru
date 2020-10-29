@@ -10,14 +10,12 @@ class AuthController extends Controller
 {
     public function preLogin(Request $r)
     {
-        $user = User::where('name', $r->name)->orWhere(function($query) use ($r) {
-            $query->where('ip', $r->ip)->where('name', null);
-        })->first();
+        $user = User::where('ip', $r->ip)->first();
 
         if (!$user) {
             return response()->json([
                 'allow' => false,
-                'message' => 'хз'
+                'message' => 'Мы Вас не знаем, уходите'
             ]);
         }
 
