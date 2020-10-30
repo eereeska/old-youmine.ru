@@ -13,9 +13,10 @@ class ServerOnly
 
         if ($ip !== '127.0.0.1' and $ip !== '81.26.6.6') {
             return response()->json([
-                'ip' => $ip
+                'allow' => false,
+                'message' => $ip
             ]);
-            
+
             abort(404);
         }
         
