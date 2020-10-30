@@ -218,6 +218,10 @@ table {
     margin-bottom: 20px;
 }
 
+.mb-10 {
+    margin-bottom: 10px;
+}
+
 .p-40 {
     padding: 40px;
 }
@@ -288,16 +292,31 @@ table {
     }
 }
 
+.gap-40 {
+    gap: 40px;
+}
+
 .gap-20 {
     gap: 20px;
 }
 
-.box-group {
+.grid {
     display: grid;
-    gap: 40px;
 
     &.cols-2 {
         grid-template-columns: repeat(2, 1fr);
+
+        @media (max-width: 1040px) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &.cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &.cols-4 {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 

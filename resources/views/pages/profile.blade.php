@@ -2,22 +2,22 @@
 @section('content')
 <div class="content profile">
     @if (!$u->name)
-    <div class="box noname mb-40">
+    <div class="box noname p-40 mb-40">
         <h2 class="mb-20">Никнейм не установлен</h2>
         <p>Войдите на сервер, чтобы<br>установить его</p>
     </div>
     @else
-    <div class="box banner">
+    <div class="box banner flex aic p-40">
         <div id="skin-upload" class="avatar" style="background-image: url({{ url('avatars/' . $u->skin_id . '.png') }})"></div>
         <input id="skin-upload-input" type="file" name="skin" accept="image/x-png" style="display: none;" hidden />
         <div class="info">
-            <h2 class="name">{{ $u->name ?? 'Ноунейм' }}</h2>
-            <span class="group">{{ $u->admin ? 'Администратор' : ($u->moderator ? 'Модератор' : 'Игрок') }}</span>
+            <h2 class="mb-10">{{ $u->name ?? 'Ноунейм' }}</h2>
+            <p>{{ $u->admin ? 'Администратор' : ($u->moderator ? 'Модератор' : 'Игрок') }}</p>
         </div>
     </div>
     @endif
-    <div class="box-group cols-2 stats">
-        <div class="box subscription">
+    <div class="grid cols-2 gap-40 stats mt-40">
+        <div class="box subscription p-40">
             <div class="visible">
                 @if ($u->admin or $u->moderator)
                 <h3>Пожизненная</h3>
@@ -43,32 +43,14 @@
                 </div>
             </div>
         </div>
-        <div class="box balance">
+        <div class="box balance p-40">
             <div class="visible">
                 <h3>{{ $u->balance }} {{ trans_choice('коин|коина|коинов', $u->balance, [], 'ru') }}</h3>
                 <p>Баланс</p>
             </div>
             <div class="hidden centered d-column pl-40 pr-40">
                 <input name="balance-input" type="number" class="underline" placeholder="Введите сумму в рублях и нажмите Enter">
-                <p class="mt-20">Поступит на баланс: <span id="balance-input-callback" class="coins">0 коинов</span></p>
-                <script>
-                    document.querySelector('input[name="balance-input"]').addEventListener('input', function(e) {
-                        var val = parseInt(e.target.value);
-                        var callback = document.getElementById('balance-input-callback');
-
-                        if (!val) {
-                            callback.textContent = 'Неверная сумма';
-                        } else {
-                            if (val < 10) {
-                                callback.textContent = 'Не меньше 10';
-                            } else if (val > 100000) {
-                                callback.textContent = 'Не больше 100.000';
-                            } else {
-                                callback.textContent = val * 2 + ' коинов';
-                            }
-                        }
-                    });
-                </script>
+                <p class="mt-20">Коинов поступит на баланс: <span class="coins">Введённая сумма * 2</span></p>
             </div>
         </div>
     </div>

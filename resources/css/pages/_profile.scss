@@ -1,16 +1,11 @@
 .content.profile {
-    
     .noname {
         background-image: url('../img/anime/banner2.png');
-        padding: 40px;
     }
 
     .banner {
         position: relative;
-        display: flex;
-        align-items: center;
         background-image: url('../img/anime/banner.png');
-        padding: 40px;
 
         .avatar {
             position: relative;
@@ -40,43 +35,19 @@
                 }
             }
         }
-
-        .info {
-            .name {
-                margin-bottom: 10px;
-            }
-
-            .group {
-                color: var(--color-white-70);
-            }
-        }
     }
 
-    .stats {
-        margin-top: 40px;
+    .stats .box {
+        &.subscription {
+            background-image: url('../img/anime/1.png');
 
-        .box {
-            padding: 40px;
-
-            &.subscription {
-                background-image: url('../img/anime/1.png');
-
-                @media (max-width: 500px) {
-                    padding: 80px 40px;
-                }
-            }
-
-            &.balance {
-                background-image: url('../img/anime/2.png');
+            @media (max-width: 500px) {
+                padding: 80px 40px;
             }
         }
 
-        @media (max-width: 1040px) {
-            grid-template-columns: 1fr;
+        &.balance {
+            background-image: url('../img/anime/2.png');
         }
-    }
-
-    .gender {
-        padding: 40px;
     }
 }
