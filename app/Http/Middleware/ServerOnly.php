@@ -12,11 +12,6 @@ class ServerOnly
         $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $request->ip();
 
         if ($ip !== '127.0.0.1' and $ip !== '81.26.6.6') {
-            return response()->json([
-                'allow' => false,
-                'message' => $ip
-            ]);
-
             abort(404);
         }
         

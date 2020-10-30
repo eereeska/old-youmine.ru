@@ -30,7 +30,7 @@ class VKController extends Controller
             }
 
             $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $r->ip();
-            $country = Location::get($ip);
+            $country = $_SERVER['HTTP_CF_IPCOUNTRY'];
 
             $vk_info = $data['response'][0];
 
@@ -40,13 +40,13 @@ class VKController extends Controller
                 $user = new User();
                 $user->vk_id = $vk_info['id'];
                 $user->reg_ip = $ip;
-                $user->reg_country = $country !== false ? $country->countryCode : null;
+                $user->reg_country = $country ?? null;
             }
 
             $user->vk_first_name = $vk_info['first_name'];
             $user->vk_last_name = $vk_info['last_name'];
             $user->vk_avatar = $vk_info['photo_max_orig'];
-            $user->country = $country !== false ? $country->countryCode : null;
+            $user->country = $country ?? null;
             $user->ip = $ip;
 
             $user->save();
