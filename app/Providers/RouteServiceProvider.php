@@ -51,7 +51,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace('App\Http\Controllers\Admin')
                 ->group(base_path('routes/admin.php'));
 
-            Route::domain('lh.youmine.ru')
+            Route::domain('server.youmine.ru')
                 ->namespace('App\Http\Controllers\Server')
                 ->group(base_path('routes/server.php'));
         });
