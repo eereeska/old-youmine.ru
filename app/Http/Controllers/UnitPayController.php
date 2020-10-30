@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 
 class UnitPayController extends Controller
 {
-    const SECRET_KEY = '';
-
     private $project_id = '326291';
     private $public_key = '326291-8e084';
     private $secret_key = 'd95f9908fcc9a18d0140d3d27c1aace3';
@@ -62,13 +60,11 @@ class UnitPayController extends Controller
                 return $this->getResponseError('Указанный пользователь не найден в базе данных');
             }
 
-            if (!Payment::insert([
-                'unitpay_id' => $params['unitpayId'],
-                'sum' => $params['sum'],
-                'user_id' => $user->id
-            ])) {
-                return $this->getResponseError('Не удалось сохранить данные платежа');
-            }
+            $payment = new Payment();
+            $payment->unitpay_id = $params['unitpayId'];
+            $payment->sum = $params['sum'];
+            $payment->user_id = $user->id;
+            $payment->save();
 
             return $this->getResponseSuccess('Всё готово для оплаты');
         } else if ($method === 'pay') {
