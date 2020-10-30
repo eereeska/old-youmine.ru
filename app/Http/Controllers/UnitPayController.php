@@ -31,22 +31,22 @@ class UnitPayController extends Controller
         $method = $request->method;
         $params = $request->params;
 
-        if ($params['signature'] != $this->getSha256SignatureByMethodAndParams($method, $params)) {
-            return $this->getResponseError('Incorrect digital signature');
+        if ($params['signature'] !== $this->getSha256SignatureByMethodAndParams($method, $params)) {
+            return $this->getResponseError('Неверная цифровая подпись');
         }
 
-        if ($params['projectId'] != $this->project_id) {
+        if ($params['projectId'] !== $this->project_id) {
             return response()->json([
                 'error' => [
-                    'message' => 'Incorrect project ID'
+                    'message' => 'Неверный ID проекта'
                 ]
             ]);
         }
 
-        if (!in_array($_SERVER['HTTP_CF_CONNECTING_IP'], $this->supportedUnitpayIp)) {
+        if (!in_array($_SERVER['HTTP_CF_CONNECTING_IP'] ?? $request->ip(), $this->supportedUnitpayIp)) {
             return response()->json([
                 'error' => [
-                    'message' => 'Unknown IP'
+                    'message' => 'Неизвестный IP'
                 ]
             ]);
         }
