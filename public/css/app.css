@@ -683,8 +683,8 @@ input[type=number].lg {
 
 .content.profile .banner .avatar {
   position: relative;
-  min-width: 180px;
-  min-height: 180px;
+  min-width: 160px;
+  min-height: 160px;
   margin-right: 30px;
   -ms-interpolation-mode: nearest-neighbor;
       image-rendering: -moz-crisp-edges;
