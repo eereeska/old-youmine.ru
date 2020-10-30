@@ -34,7 +34,12 @@ class AuthController extends Controller
         // TODO: Проверка на баны
 
         return response()->json([
-            'allow' => true
+            'allow' => true,
+            'skin' => false
+            // 'skin' => [
+            //     'textures' => '',
+            //     'signature' => ''
+            // ]
             // TODO: Скин
         ]);
     }
