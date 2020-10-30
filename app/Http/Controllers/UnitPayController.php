@@ -53,13 +53,13 @@ class UnitPayController extends Controller
 
         if ($method === 'check') {
             if (Payment::where('unitpay_id', $params['unitpayId'])->exists()) {
-                return $this->getResponseSuccess('Payment already exists');
+                return $this->getResponseSuccess('Платёж уже существует');
             }
 
             $user = User::where('id', $params['account'])->first();
 
             if (!$user) {
-                return $this->getResponseSuccess('Specified user is not exists');
+                return $this->getResponseError('Указанный пользователь не найден в базе данных');
             }
 
             if (!Payment::insert([
@@ -67,43 +67,40 @@ class UnitPayController extends Controller
                 'sum' => $params['sum'],
                 'user_id' => $user->id
             ])) {
-                return $this->getResponseError('Unable to create payment database');
+                return $this->getResponseError('Не удалось сохранить данные платежа');
             }
 
-            return $this->getResponseSuccess('CHECK is successful');
-        }
-
-        if ($method === 'pay') {
+            return $this->getResponseSuccess('Всё готово для оплаты');
+        } else if ($method === 'pay') {
             $payment = Payment::where('unitpay_id', $params['unitpayId'])->first();
 
             if (!$payment) {
-                return $this->getResponseSuccess('Payment not found');
+                return $this->getResponseError('Платёж не найден');
             }
 
-            if ($payment->status == 1) {
-                return $this->getResponseSuccess('Payment has already been paid');
+            if ($payment->completed) {
+                return $this->getResponseSuccess('Платёж уже оплачен');
             }
 
             $user = User::where('id', $payment->user_id)->first();
 
             if (!$user) {
-                return $this->getResponseError('Unable to find account');
+                return $this->getResponseError('Указанный пользователь не найден в базе данных');
             }
 
-            if (!$user->increment('balance', $payment->sum)) {
-                return $this->getResponseError('Unable to update user balance');
+            if (!$user->increment('balance', ((int) $payment->sum) * 2)) {
+                return $this->getResponseError('Не удалось обновить баланс пользователя');
             }
 
             // VKController::sendMessage($user, 'Баланс на сайте был успешно пополнен, теперь он составляет: ' . $user->balance . 'руб', true);
 
-            $payment->status = 1;
-            $payment->complete_at = now();
+            $payment->completed = true;
             $payment->save();
 
             return $this->getResponseSuccess('PAY is successful');
         }
 
-        return $this->getResponseError($method.' not supported');
+        return $this->getResponseError($method.' не поддерживается');
     }
 
     public function deposit(Request $request, $sum)
