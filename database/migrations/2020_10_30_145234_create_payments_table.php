@@ -10,6 +10,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('unitpay_id');
             $table->integer('user_id')->unsigned();
             $table->integer('sum');
             $table->boolean('completed')->default(false);

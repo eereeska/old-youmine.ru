@@ -25,7 +25,7 @@ class UnitPayController extends Controller
     public function check(Request $request)
     {
         if (empty($request->method) || empty($request->params) || !is_array($request->params)) {
-            return $this->getResponseError('Invalid request');
+            return $this->getResponseError('Неверные параметры запроса');
         }
 
         $method = $request->method;
@@ -52,7 +52,7 @@ class UnitPayController extends Controller
         }
 
         if ($method === 'check') {
-            if (Payment::where('unitpayId', $params['unitpayId'])->exists()) {
+            if (Payment::where('unitpay_id', $params['unitpayId'])->exists()) {
                 return $this->getResponseSuccess('Payment already exists');
             }
 
@@ -63,7 +63,7 @@ class UnitPayController extends Controller
             }
 
             if (!Payment::insert([
-                'unitpayId' => $params['unitpayId'],
+                'unitpay_id' => $params['unitpayId'],
                 'sum' => $params['sum'],
                 'user_id' => $user->id
             ])) {
@@ -74,7 +74,7 @@ class UnitPayController extends Controller
         }
 
         if ($method === 'pay') {
-            $payment = Payment::where('unitpayId', $params['unitpayId'])->first();
+            $payment = Payment::where('unitpay_id', $params['unitpayId'])->first();
 
             if (!$payment) {
                 return $this->getResponseSuccess('Payment not found');
