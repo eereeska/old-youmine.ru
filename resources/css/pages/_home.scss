@@ -10,6 +10,7 @@
     align-items: center;
     justify-content: center;
     padding: 1.3rem;
+    animation: zoomIn 1s ease-in-out;
     overflow: auto;
 
     @media (max-width: 600px) {
@@ -37,6 +38,7 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
+        animation: spinRight 3s ease-in-out 5s infinite alternate-reverse;
     }
 
     .title {

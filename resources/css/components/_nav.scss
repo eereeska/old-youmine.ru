@@ -1,18 +1,32 @@
 .content-nav {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
     max-width: var(--content-max-width);
-    flex: 1;
-    border-bottom: 2px solid var(--color-border);
-    padding: 40px 0;
     margin: 0 auto;
+    animation: fadeInUp 1s ease-in-out;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background-color: var(--color-border);
+        z-index: 1;
+    }
 
     a {
         position: relative;
         padding: 40px 0;
-        margin-right: 40px;
-
-        &:last-child {
-            margin-right: 0;
-        }
 
         &.active {
             color: var(--color-white);
@@ -21,10 +35,11 @@
                 content: '';
                 position: absolute;
                 right: 0;
-                bottom: -2px;
+                bottom: 0;
                 left: 0;
                 height: 2px;
                 background-color: var(--color-white);
+                z-index: 2;
             }
         }
     }

@@ -26,6 +26,24 @@ $(document).on('click', '[data-action="toggle"]', function(e) {
     }
 });
 
+$(document).on('click', '[data-action="request"]', function(e) {
+    e.preventDefault();
+
+    var clickedElement = $(this);
+
+    if (clickedElement.data('request-callback') == 'alert') {
+        axios.get(clickedElement.attr('href')).then(function(response) {
+            alert(response.data.message);
+        }).catch(function(error) {
+            if (error.response.status == 419) {
+                alert('Ваш токен более недействителен. Перезагрузите страницу и попробуйте снова')
+            } else {
+                alert('Произошла ошибка при обработке запроса')
+            }
+        });
+    }
+});
+
 $(document).on('click', '[data-action="submit-form"]', function(e) {
     e.preventDefault();
     
@@ -69,4 +87,16 @@ $('#skin-upload-input').on('change', function(e) {
         avatar.removeClass('loading');
         alert('Произошла ошибка при обработке запроса')
     });
+});
+
+$('#deposit-input').on('keyup', function(e) {
+    if (e.key !== 'Enter') {
+        return;
+    }
+
+    var sum = parseInt($(this).val());
+
+    if (sum >= 10) {
+        return window.location.href = $(this).data('redirect') + '?sum=' + sum;
+    }
 });

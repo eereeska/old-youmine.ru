@@ -99,9 +99,9 @@ class UnitPayController extends Controller
         return $this->getResponseError($method.' не поддерживается');
     }
 
-    public function deposit(Request $request, $sum)
+    public function deposit(Request $r)
     {
-        $request->validate([$sum], [
+        $r->validate([
             'sum' => ['required', 'integer', 'min:10', 'max:100000']
         ], [
             'sum.required' => 'Сумма не указана',
@@ -110,8 +110,9 @@ class UnitPayController extends Controller
             'sum.max' => 'Максимальная сумма пополнения за один раз: 100.000 рублей'
         ]);
 
-        $user = $request->user();
-        $desc = 'YouMine — Пополнение баланса';
+        $user = $r->user();
+        $sum = $r->sum;
+        $desc = 'YouMine — Покупка коинов';
 
         return redirect('https://unitpay.ru/pay/' . $this->public_key . '?sum=' . $sum . '&account=' . $user->id . '&currency=RUB&desc=' . $desc . '&signature=' . $this->getFormSignature($user->id, 'RUB', $desc, $sum));
     }

@@ -30,7 +30,7 @@ class AuthController extends Controller
             ]);
         }
 
-        if ((!$user->admin and !$user->moderator) and $user->sub_expire_at->lte(now())) {
+        if ((!$user->admin and !$user->moderator) and (!is_null($user->sub_expire_at) and $user->sub_expire_at->lte(now()))) {
             return response()->json([
                 'allow' => false,
                 'message' => 'Подписка отсутствует'

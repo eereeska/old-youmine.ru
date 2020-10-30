@@ -17,7 +17,9 @@ Route::get('/unitpay/check', [UnitPayController::class, 'check']);
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile-update');
+    Route::get('/profile/buy/sub/month', [ProfileController::class, 'buySubMonth'])->name('profile-buy-sub-month');
+    Route::get('/profile/buy/sub/lifetime', [ProfileController::class, 'buySubLifeTime'])->name('profile-buy-sub-lifetime');
+    Route::get('/deposit', [UnitPayController::class, 'deposit'])->name('deposit');
 });
 
 

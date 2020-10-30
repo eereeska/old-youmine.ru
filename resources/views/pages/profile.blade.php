@@ -18,6 +18,10 @@
     @endif
     <div class="grid cols-2 gap-40 stats mt-40">
         <div class="box subscription p-40">
+            @if (($u->admin or $u->moderator) or is_null($u->sub_expire_at))
+            <h3>Пожизненная</h3>
+            <p>Подписка</p>
+            @else
             <div class="visible">
                 @if ($u->admin or $u->moderator)
                 <h3>Пожизненная</h3>
@@ -32,16 +36,17 @@
                 <div class="choice cols-2 text-center">
                     <div class="left">
                         @if (now()->gte($u->sub_expire_at))
-                        <a href="#">Купить на месяц<br><span class="coins">300 коинов</span></a>
+                        <a href="{{ route('profile-buy-sub-month') }}" data-action="request" data-request-callback="alert">Купить на месяц<br><span class="coins">200 коинов</span></a>
                         @else
-                        <a href="#">Продлить на месяц<br><span class="coins">300 коинов</span></a>
+                        <a href="{{ route('profile-buy-sub-month') }}" data-action="request" data-request-callback="alert">Продлить на месяц<br><span class="coins">200 коинов</span></a>
                         @endif
                     </div>
                     <div class="right">
-                        <a href="#">Купить навсегда<br><span class="coins">1000 коинов</span></a>
+                        <a href="{{ route('profile-buy-sub-lifetime') }}" data-action="request" data-request-callback="alert">Купить навсегда<br><span class="coins">1000 коинов</span></a>
                     </div>
                 </div>
             </div>
+            @endif
         </div>
         <div class="box balance p-40">
             <div class="visible">
@@ -49,7 +54,7 @@
                 <p>Баланс</p>
             </div>
             <div class="hidden centered d-column pl-40 pr-40">
-                <input name="balance-input" type="number" class="underline" placeholder="Введите сумму в рублях и нажмите Enter">
+                <input id="deposit-input" name="balance-input" type="number" class="underline" placeholder="Введите сумму в рублях и нажмите Enter" data-redirect="{{ route('deposit') }}">
                 <p class="mt-20">Коинов поступит на баланс: <span class="coins">Введённая сумма * 2</span></p>
             </div>
         </div>
