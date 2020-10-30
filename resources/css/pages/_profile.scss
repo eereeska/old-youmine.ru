@@ -13,9 +13,32 @@
         padding: 40px;
 
         .avatar {
+            position: relative;
             min-width: 180px;
             min-height: 180px;
             margin-right: 30px;
+            image-rendering: pixelated;
+            transition: opacity 0.3s ease-in-out;
+            cursor: pointer;
+
+            &.loading {
+                opacity: 0.4;
+                cursor: default;
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    background-image: url('../img/loading.svg');
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: 60px;
+                    z-index: 1;
+                }
+            }
         }
 
         .info {

@@ -410,6 +410,34 @@ table tbody td {
   }
 }
 
+@-webkit-keyframes opacityPulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opacityPulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .content-nav {
   max-width: var(--content-max-width);
   flex: 1;
@@ -654,9 +682,34 @@ input[type=number].lg {
 }
 
 .content.profile .banner .avatar {
+  position: relative;
   min-width: 180px;
   min-height: 180px;
   margin-right: 30px;
+  -ms-interpolation-mode: nearest-neighbor;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: pixelated;
+  transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.content.profile .banner .avatar.loading {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.content.profile .banner .avatar.loading:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url(/images/loading.svg?529be3ec5cd3ce949ef769b26fae6260);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60px;
+  z-index: 1;
 }
 
 .content.profile .banner .info .name {

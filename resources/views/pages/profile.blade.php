@@ -8,7 +8,8 @@
     </div>
     @else
     <div class="box banner">
-        {{-- <div class="avatar"></div> --}}
+        <div id="skin-upload" class="avatar" style="background-image: url({{ url('avatars/' . $u->skin_id . '.png') }})"></div>
+        <input id="skin-upload-input" type="file" name="skin" style="display: none;" hidden />
         <div class="info">
             <h2 class="name">{{ $u->name ?? 'Ноунейм' }}</h2>
             <span class="group">{{ $u->admin ? 'Администратор' : ($u->moderator ? 'Модератор' : 'Игрок') }}</span>

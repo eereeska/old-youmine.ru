@@ -14,6 +14,7 @@ class CreateUsersTable extends Migration
             $table->boolean('admin')->default(false);
             $table->boolean('moderator')->default(false);
             $table->integer('balance')->default(0);
+            $table->integer('skin_id')->default(1);
             $table->string('vk_id')->unique()->index();
             $table->string('vk_first_name');
             $table->string('vk_last_name');

@@ -13035,6 +13035,39 @@ $(document).on('click', '[data-action="submit-form"]', function (e) {
   e.preventDefault();
   $('#' + $(this).data('form')).trigger('submit');
 });
+$('#skin-upload').on('click', function (e) {
+  e.preventDefault();
+  $('#skin-upload-input').trigger('click');
+});
+$('#skin-upload-input').on('change', function (e) {
+  var avatar = $('#skin-upload');
+
+  if (avatar.hasClass('loading')) {
+    return;
+  }
+
+  var files = $('#skin-upload-input')[0].files;
+
+  if (files.length < 1) {
+    return;
+  }
+
+  var form = new FormData();
+  form.append('skin', files[0]);
+  avatar.addClass('loading');
+  axios.post('/front/skin', form).then(function (response) {
+    if (response.data.success) {
+      avatar.css('background-image', 'url(' + response.data.skin.avatar + ')');
+    } else {
+      alert(response.data.message);
+    }
+
+    avatar.removeClass('loading');
+  })["catch"](function () {
+    avatar.removeClass('loading');
+    alert('Произошла ошибка при обработке запроса');
+  });
+});
 
 /***/ }),
 
