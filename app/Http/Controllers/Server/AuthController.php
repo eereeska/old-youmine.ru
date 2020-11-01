@@ -49,7 +49,6 @@ class AuthController extends Controller
             'allow' => true,
             'skin_texture' => $skin->texture,
             'skin_signature' => $skin->signature
-            // TODO: Скин
         ]);
     }
 }

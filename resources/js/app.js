@@ -84,7 +84,8 @@ $('#skin-upload-input').on('change', function(e) {
         }
 
         avatar.removeClass('loading');
-    }).catch(function() {
+    }).catch(function(error) {
+        console.log(error);
         avatar.removeClass('loading');
         alert('Произошла ошибка при обработке запроса');
     });
