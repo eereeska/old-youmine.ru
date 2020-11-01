@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UnitPayController extends Controller
 {
@@ -102,19 +103,76 @@ class UnitPayController extends Controller
     public function deposit(Request $r)
     {
         $r->validate([
-            'sum' => ['required', 'integer', 'min:10', 'max:100000']
+            'sum' => ['required', 'integer', 'min:1', 'max:100000']
         ], [
             'sum.required' => 'Сумма не указана',
             'sum.integer' => 'Сумма должна быть в виде целого числа',
-            'sum.min' => 'Минимальная сумма пополнения: 10 рублей',
+            'sum.min' => 'Минимальная сумма пополнения: 1 рубль',
             'sum.max' => 'Максимальная сумма пополнения за один раз: 100.000 рублей'
         ]);
 
         $user = $r->user();
         $sum = $r->sum;
-        $desc = 'YouMine — Покупка коинов';
+        $coins = $sum * 2;
+        $bonus = $this->getCoinsBonus($coins);
+        $desc = 'YouMine — Покупка ' . ($coins + $bonus) . ' ' . trans_choice('коин|коина|коинов', ($coins + $bonus), [], 'ru');
 
         return redirect('https://unitpay.ru/pay/' . $this->public_key . '?sum=' . $sum . '&account=' . $user->id . '&currency=RUB&desc=' . $desc . '&signature=' . $this->getFormSignature($user->id, 'RUB', $desc, $sum));
+    }
+
+    public function convertRubToCoins(Request $r)
+    {
+        $v = Validator::make($r->all(), [
+            'sum' => ['required', 'integer', 'min:1', 'max:100000']
+        ], [
+            'sum.required' => 'Сумма в рублях не указана',
+            'sum.integer' => 'Сумма должна быть в виде целого числа',
+            'sum.min' => 'Мин. сумма пополнения: 1 рубль',
+            'sum.max' => 'Макс. сумма пополнения за один раз: 100.000 рублей'
+        ]);
+
+        if ($v->fails()) {
+            if ($r->ajax() || $r->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $v->errors()->first()
+                ]);
+            } else {
+                return $v->errors()->first();
+            }
+        }
+
+        $coins = $r->sum * 2;
+        $bonus = $this->getCoinsBonus($coins);
+        $message = $coins . ' ' . trans_choice('коин|коина|коинов', $coins, [], 'ru') . ($bonus > 0 ? ' + ' . $bonus . ' (бонус)' : '');
+
+        if ($r->ajax() || $r->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message
+            ]);
+        } else {
+            return $message;
+        }
+    }
+
+    private function getCoinsBonus($sum)
+    {
+        if ($sum >= 10000) {
+            return round((($sum * 2) / 100) * 10);
+        } else if ($sum >= 5000) {
+            return round((($sum * 2) / 100) * 5);
+        } else if ($sum >= 1000) {
+            return round((($sum * 2) / 100) * 4);
+        } else if ($sum >= 500) {
+            return round((($sum * 2) / 100) * 3);
+        } else if ($sum >= 100) {
+            return round((($sum * 2) / 100) * 2);
+        } else if ($sum >= 50) {
+            return round((($sum * 2) / 100) * 1);
+        } else {
+            return 0;
+        }
     }
 
     private function getResponseSuccess($message)

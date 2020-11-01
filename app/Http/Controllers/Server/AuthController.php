@@ -16,7 +16,7 @@ class AuthController extends Controller
         if (!$user) {
             return response()->json([
                 'allow' => false,
-                'message' => 'Мы Вас не знаем, уходите'
+                'message' => "Мы Вас не знаем, уходите\nРегистрация и авторизация происходит на нашем сайте:\n§9youmine.ru/profile"
             ]);
         }
 

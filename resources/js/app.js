@@ -1,3 +1,4 @@
+window._ = require('lodash');
 window.$ = require('jquery');
 window.axios = require('axios');
 
@@ -85,18 +86,32 @@ $('#skin-upload-input').on('change', function(e) {
         avatar.removeClass('loading');
     }).catch(function() {
         avatar.removeClass('loading');
-        alert('Произошла ошибка при обработке запроса')
+        alert('Произошла ошибка при обработке запроса');
     });
 });
 
-$('#deposit-input').on('keyup', function(e) {
-    if (e.key !== 'Enter') {
+$('#deposit-input').on('keyup', _.debounce(function(e) {
+    var sum = parseInt($(this).val());
+
+    if (!sum) {
         return;
     }
 
-    var sum = parseInt($(this).val());
+    if (e.key !== 'Enter') {
+        axios.get('/front/deposit/convert/rub/coins?sum=' + sum).then(function(response) {
+            if (response.data.success) {
+                $('#deposit-coins-sum').text(response.data.message);
+            } else {
+                $('#deposit-coins-sum').html('<span class="light-red">' + response.data.message + '</span>')
+            }
+        }).catch(function(error) {
+            alert('Произошла ошибка при обработке запроса')
+        });
+
+        return;
+    }
 
     if (sum >= 10) {
         return window.location.href = $(this).data('redirect') + '?sum=' + sum;
     }
-});
+}, 300));

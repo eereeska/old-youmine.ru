@@ -18,42 +18,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function buySubMonth(Request $r)
-    {
-        if (!$r->ajax()) {
-            return redirect()->back();
-        }
-
-        $u = $r->user();
-
-        if ($u->admin || $u->moderator) {
-            return response()->json([
-                'message' => 'У Вас и так пожизненная подписка'
-            ]);
-        }
-
-        if ($u->balance < 200) {
-            return response()->json([
-                'message' => 'Недостаточно средств на балансе'
-            ]);
-        }
-
-        $u->balance -= 200;
-
-        if ($u->sub_expire_at->lt(now())) {
-            $u->sub_expire_at = now()->addDays(30);
-        } else {
-            $u->sub_expire_at = $u->sub_expire_at->addDays(30);
-        }
-
-        $u->save();
-
-        return response()->json([
-            'message' => 'Подписка была продлена до ' . $u->sub_expire_at->format('d-m-Y')
-        ]);
-    }
-
-    public function buySubLifeTime(Request $r)
+    public function purchaseSubscription(Request $r)
     {
         if (!$r->ajax()) {
             return redirect()->back();
@@ -67,19 +32,41 @@ class ProfileController extends Controller
             ]);
         }
 
-        if ($u->balance < 1000) {
+        if ($r->boolean('lifetime')) {
+            if ($u->balance < 200) {
+                return response()->json([
+                    'message' => 'Недостаточно средств на балансе'
+                ]);
+            }
+            
+            $u->balance -= 200;
+
+            if ($u->sub_expire_at->lt(now())) {
+                $u->sub_expire_at = now()->addDays(30);
+            } else {
+                $u->sub_expire_at = $u->sub_expire_at->addDays(30);
+            }
+
+            $u->save();
+
             return response()->json([
-                'message' => 'Недостаточно средств на балансе'
+                'message' => 'Подписка была продлена до ' . $u->sub_expire_at->format('d-m-Y')
+            ]);
+        } else {
+            if ($u->balance < 1000) {
+                return response()->json([
+                    'message' => 'Недостаточно средств на балансе'
+                ]);
+            }
+
+            $u->balance -= 1000;
+            $u->sub_expire_at = null;
+            $u->save();
+
+            return response()->json([
+                'message' => 'Пожизненная подписка была успешно приобретена'
             ]);
         }
-
-        $u->balance -= 1000;
-        $u->sub_expire_at = null;
-        $u->save();
-
-        return response()->json([
-            'message' => 'Пожизненная подписка была успешно приобретена'
-        ]);
     }
 
     public function update(Request $r)

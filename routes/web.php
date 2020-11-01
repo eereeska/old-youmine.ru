@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 
 Route::group(['prefix' => 'front', 'middleware' => 'auth'], function() {
+    Route::get('/deposit/convert/rub/coins', [UnitPayController::class, 'convertRubToCoins']);
     Route::post('/toggle', [FrontController::class, 'toggle'])->name('front-toggle');
     Route::post('/search/users/unconfirmed', [FrontController::class, 'searchUnconfirmedUsers']);
     Route::post('/skin', [SkinController::class, 'upload'])->name('skin-upload');

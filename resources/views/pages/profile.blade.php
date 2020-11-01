@@ -55,7 +55,7 @@
             </div>
             <div class="hidden centered d-column pl-40 pr-40">
                 <input id="deposit-input" name="balance-input" type="number" class="underline" placeholder="Введите сумму в рублях и нажмите Enter" data-redirect="{{ route('deposit') }}">
-                <p class="mt-20">Коинов поступит на баланс: <span class="coins">Введённая сумма * 2</span></p>
+                <span id="deposit-coins-sum" class="coins mt-20">1 рубль = 2 коина</span>
             </div>
         </div>
     </div>

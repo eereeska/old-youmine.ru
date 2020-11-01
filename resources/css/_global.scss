@@ -87,6 +87,7 @@
     --color-border: #272934;
     --color-black: #181920;
     --color-green: #549E83;
+    --color-light-red: #FF5555;
     --color-red: #834E4E;
     --color-gold: #FFBB55;
     --color-blue: #7677EA;
@@ -173,9 +174,14 @@ b {
 }
 
 span {
-
     &.coins {
         color: var(--color-gold);
+    }
+    &.red {
+        color: var(--color-red);
+    }
+    &.light-red {
+        color: var(--color-light-red);
     }
 }
 
