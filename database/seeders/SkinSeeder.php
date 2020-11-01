@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Skin;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class SkinSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('skins')->insert([
+        Skin::create([
             'owner_id' => 1,
             'slim' => false,
             'texture' => 'ewogICJ0aW1lc3RhbXAiIDogMTYwNDA1NjM3MzY0MiwKICAicHJvZmlsZUlkIiA6ICI5ZDIyZGRhOTVmZGI0MjFmOGZhNjAzNTI1YThkZmE4ZCIsCiAgInByb2ZpbGVOYW1lIiA6ICJTYWZlRHJpZnQ0OCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9lZDkyNGQ0MTRiMzRlMzhmMGI4YzQ4YjBlOWJiNjRiM2VmZjY5NDE1NzM2YzdkNzY0ZDFiM2VhYjc5NTg0NzdjIgogICAgfQogIH0KfQ==',
