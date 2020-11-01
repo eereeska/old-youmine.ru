@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Skin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SkinController extends Controller
@@ -35,10 +34,7 @@ class SkinController extends Controller
 
         $user = $r->user();
         $file = $r->file('skin');
-
-        // Storage::putFileAs('public/skins/raw', $r->file('skin'), 'temp' . '.png');
-
-        // $file = Storage::get('public/skins/raw/temp.png');
+        $file_contents = file_get_contents($file->path());
 
         // if (!$user->admin and Skin::where('owner_id', $user->id)->count() > 0) {
         //     return response()->json([
@@ -49,7 +45,7 @@ class SkinController extends Controller
 
         $model = ((imagecolorat(imagecreatefrompng($file->path()), 54, 20) >> 24) & 0x7F == 127) ? 'alex' : 'steve';
 
-        $response = Http::attach('file', file_get_contents($file->path()), 'skin.png')->post('https://api.mineskin.org/generate/upload?visibility=1&name=YouMine&model=' . $model);
+        $response = Http::attach('file', $file_contents, 'skin.png')->post('https://api.mineskin.org/generate/upload?visibility=1&name=YouMine&model=' . $model);
 
         if (!$response->successful()) {
             return response()->json([
@@ -61,10 +57,17 @@ class SkinController extends Controller
         $texture = $response['data']['texture']['value'];
         $signature = $response['data']['texture']['signature'];
 
-        if (Skin::where('texture', $texture)->where('signature', $signature)->exists()) {
+        $skin = Skin::where('texture', $texture)->where('signature', $signature)->first();
+
+        if ($skin) {
+            $user->skin_id = $skin->id;
+            $user->save();
+
             return response()->json([
-                'success' => false,
-                'message' => 'Указанный скин уже загружен'
+                'success' => true,
+                'skin' => [
+                    'avatar' => url('avatars/' . $skin->id . '.png')
+                ]
             ]);
         }
 
@@ -76,7 +79,7 @@ class SkinController extends Controller
         $skin->signature = $signature;
         $skin->save();
 
-        $im = imagecreatefromstring(file_get_contents($file->path()));
+        $im = imagecreatefromstring($file_contents);
         $av = imagecreatetruecolor(8, 8);
 
         imagecopyresized($av, $im, 0, 0, 8, 8, 8, 8, 8, 8);
