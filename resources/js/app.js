@@ -85,9 +85,13 @@ $('#skin-upload-input').on('change', function(e) {
 
         avatar.removeClass('loading');
     }).catch(function(error) {
-        console.log(error);
         avatar.removeClass('loading');
-        alert('Произошла ошибка при обработке запроса');
+
+        if (error.response.status == 419) {
+            alert('Ваш токен более недействителен. Перезагрузите страницу и попробуйте снова')
+        } else {
+            alert('Произошла ошибка при обработке запроса')
+        }
     });
 });
 
@@ -105,7 +109,7 @@ $('#deposit-input').on('keyup', _.debounce(function(e) {
             } else {
                 $('#deposit-coins-sum').html('<span class="light-red">' + response.data.message + '</span>')
             }
-        }).catch(function(error) {
+        }).catch(function() {
             alert('Произошла ошибка при обработке запроса')
         });
 
