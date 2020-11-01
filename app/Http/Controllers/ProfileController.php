@@ -32,7 +32,21 @@ class ProfileController extends Controller
             ]);
         }
 
-        if ($r->boolean('lifetime')) {
+        if ($r->has('lifetime') and $r->boolean('lifetime')) {
+            if ($u->balance < 1000) {
+                return response()->json([
+                    'message' => 'Недостаточно средств на балансе'
+                ]);
+            }
+
+            $u->balance -= 1000;
+            $u->sub_expire_at = null;
+            $u->save();
+
+            return response()->json([
+                'message' => 'Пожизненная подписка была успешно приобретена'
+            ]);
+        } else {
             if ($u->balance < 200) {
                 return response()->json([
                     'message' => 'Недостаточно средств на балансе'
@@ -51,20 +65,6 @@ class ProfileController extends Controller
 
             return response()->json([
                 'message' => 'Подписка была продлена до ' . $u->sub_expire_at->format('d-m-Y')
-            ]);
-        } else {
-            if ($u->balance < 1000) {
-                return response()->json([
-                    'message' => 'Недостаточно средств на балансе'
-                ]);
-            }
-
-            $u->balance -= 1000;
-            $u->sub_expire_at = null;
-            $u->save();
-
-            return response()->json([
-                'message' => 'Пожизненная подписка была успешно приобретена'
             ]);
         }
     }

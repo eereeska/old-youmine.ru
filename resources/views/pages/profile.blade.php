@@ -36,13 +36,13 @@
                 <div class="choice cols-2 text-center">
                     <div class="left">
                         @if (now()->gte($u->sub_expire_at))
-                        <a href="{{ route('profile-buy-sub-month') }}" data-action="request" data-request-callback="alert">Купить на месяц<br><span class="coins">200 коинов</span></a>
+                        <a href="{{ route('profile-purchase-sub') }}" data-action="request" data-request-callback="alert">Купить на месяц<br><span class="coins">200 коинов</span></a>
                         @else
-                        <a href="{{ route('profile-buy-sub-month') }}" data-action="request" data-request-callback="alert">Продлить на месяц<br><span class="coins">200 коинов</span></a>
+                        <a href="{{ route('profile-purchase-sub') }}" data-action="request" data-request-callback="alert">Продлить на месяц<br><span class="coins">200 коинов</span></a>
                         @endif
                     </div>
                     <div class="right">
-                        <a href="{{ route('profile-buy-sub-lifetime') }}" data-action="request" data-request-callback="alert">Купить навсегда<br><span class="coins">1000 коинов</span></a>
+                        <a href="{{ route('profile-purchase-sub', ['lifetime' => true]) }}" data-action="request" data-request-callback="alert">Купить навсегда<br><span class="coins">1000 коинов</span></a>
                     </div>
                 </div>
             </div>

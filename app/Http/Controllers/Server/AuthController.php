@@ -33,7 +33,7 @@ class AuthController extends Controller
         if ((!$user->admin and !$user->moderator) and (!is_null($user->sub_expire_at) and $user->sub_expire_at->lte(now()))) {
             return response()->json([
                 'allow' => false,
-                'message' => 'Подписка отсутствует'
+                'message' => "§cПодписка отсутствует\n\n§fКупить можно на нашем сайте, в профиле:\n§9youmine.ru/profile\n\n§7На месяц: §f100 рублей §8(§6200 коинов§8)\n§7Навсегда: §f500 рублей §8(§61000 коинов§8)"
             ]);
         }
 
