@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\ServerLoginAttempt;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +26,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        $schedule->call(function () {
+            ServerLoginAttempt::where('created_at', '<=', now()->subDays(30))->each(function ($row) {
+                $row->delete();
+            });
+        })->daily();
     }
 
     /**

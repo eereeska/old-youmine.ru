@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Server;
 
+use App\Events\Server\LoginAttemptEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Skin;
 use App\Models\User;
@@ -12,6 +13,8 @@ class AuthController extends Controller
     public function preLogin(Request $r)
     {
         $user = User::where('ip', $r->ip)->first();
+
+        event(new LoginAttemptEvent($user, $r->ip));
 
         if (!$user) {
             return response()->json([

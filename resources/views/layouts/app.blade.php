@@ -11,11 +11,12 @@
     <nav class="content-nav flex jcc gap-40 text-center">
         <a href="{{ route('home') }}" class="{{ (request()->is('/')) ? 'active' : '' }}">Главная</a>
         <a href="{{ route('profile') }}" class="{{ (request()->is('profile')) ? 'active' : '' }}">Профиль</a>
-        <a href="{{ route('logout') }}">Выйти</a>
         
         @if ($u->admin)
         <a href="{{ route('admin-stats') }}" class="{{ (request()->is('admin*')) ? 'active' : '' }}"">Админка</a>
         @endif
+
+        <a href="{{ route('logout') }}">Выйти</a>
     </nav>
     @if ($errors->any())
     <div class="alert red">{{ $errors->first() }}</div>

@@ -259,6 +259,10 @@ table {
     animation: fadeInUp 1s ease-in-out;
 }
 
+.full-width {
+    max-width: calc(100% - 80px) !important;
+}
+
 .avatar {
     min-width: 60px;
     min-height: 60px;
