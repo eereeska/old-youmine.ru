@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
 <div class="content admin-stats">
-    <h3>Новых пользователей</h3>
+    <a href="{{ route('admin-users') }}"><h3>Новых пользователей</h3></a>
     <canvas id="users-registered" class="mb-40"></canvas>
     <script>
         new Chart(document.getElementById('users-registered'), {
@@ -14,7 +14,6 @@
                 ],
                 datasets: [
                     {
-                        // label: 'Все',
                         data: [@foreach (array_keys($users['registered']->toArray()) as $key){{ $users['registered'][$key]->count() }}, @endforeach],
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
@@ -27,17 +26,24 @@
                     display: false
                 },
                 responsive: true,
+                spanGaps: false,
+                elements: {
+                    line: {
+                        tension: 0.000001
+                    }
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            precision: 0
                         }
                     }]
                 }
             }
         });
     </script>
-    <h3>Попыток войти на сервер</h3>
+    <a href="{{ route('admin-server-login-attempts') }}"><h3>Попыток войти на сервер</h3></a>
     <canvas id="server-login-attempts"></canvas>
     <script>
         new Chart(document.getElementById('server-login-attempts'), {
@@ -67,10 +73,17 @@
             },
             options: {
                 responsive: true,
+                spanGaps: false,
+                elements: {
+                    line: {
+                        tension: 0.000001
+                    }
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            precision: 0
                         }
                     }]
                 }

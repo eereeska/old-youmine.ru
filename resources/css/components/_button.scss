@@ -1,4 +1,6 @@
 .button {
+    font-family: inherit;
+    appearance: none;
     text-align: center;
     font-weight: 600;
     display: block;
@@ -6,6 +8,7 @@
     background-position: center;
     border: 2px solid transparent;
     padding: 15px 30px;
+    outline: none;
     transition: background-color 0.1s ease-in-out, transform 0.1s linear, opacity 0.1s ease-in-out, background-image 0.1s ease-in-out;
     cursor: pointer;
 

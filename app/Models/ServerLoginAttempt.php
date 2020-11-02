@@ -12,4 +12,9 @@ class ServerLoginAttempt extends Model
         'user_id',
         'ip'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

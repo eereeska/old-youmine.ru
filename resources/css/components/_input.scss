@@ -27,12 +27,16 @@ input[type="number"] {
     }
 
     &.underline {
-        border-bottom: 2px solid var(--color-bg-50);
+        border-bottom: 2px solid var(--color-border);
         transition: border-bottom 0.2s ease-in-out;
 
         &:focus {
             border-bottom: 2px solid var(--color-white-70);
         }
+    }
+
+    &.v1 {
+        padding: 15px 0px;
     }
 
     &.lg {

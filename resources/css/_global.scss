@@ -104,16 +104,18 @@ html {
 }
 
 body {
-    &:before {
-        content: '';
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: radial-gradient(50% 50% at 50% 50%, #1A1D28 0%, rgba(15, 17, 24, 0) 100%);
-        transform: translateY(-50%);
-        z-index: -2;
+    @media (min-width: 700px) {
+        &:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(50% 50% at 50% 50%, #1A1D28 0%, rgba(15, 17, 24, 0) 100%);
+            transform: translateY(-50%);
+            z-index: -2;
+        }
     }
 
     &::-webkit-scrollbar {
@@ -202,54 +204,6 @@ table {
     tbody td {
         padding-bottom: 20px;
     }
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-center {
-    text-align: center;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.mt-40 {
-    margin-top: 40px;
-}
-
-.mt-20 {
-    margin-top: 20px;
-}
-
-.mt-10 {
-    margin-top: 10px;
-}
-
-.mb-40 {
-    margin-bottom: 40px;
-}
-
-.mb-20 {
-    margin-bottom: 20px;
-}
-
-.mb-10 {
-    margin-bottom: 10px;
-}
-
-.p-40 {
-    padding: 40px;
-}
-
-.pr-40 {
-    padding-right: 40px;
-}
-
-.pl-40 {
-    padding-left: 40px;
 }
 
 .content {
@@ -441,6 +395,54 @@ table {
         backdrop-filter: blur(15px);
         transition: all 0.15s ease-in-out;
     }
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.p-40 {
+    padding: 40px;
+}
+
+.pr-40 {
+    padding-right: 40px;
+}
+
+.pl-40 {
+    padding-left: 40px;
+}
+
+.mt-40 {
+    margin-top: 40px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mb-40 {
+    margin-bottom: 40px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
 }
 
 @keyframes fadeInUp {

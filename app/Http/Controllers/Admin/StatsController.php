@@ -15,7 +15,7 @@ class StatsController extends Controller
         return view('pages.admin.stats', [
             'u' => $r->user(),
             'users' => [
-                'registered' => User::orderBy('created_at')->take(100)->get()->groupBy(function($item) {
+                'registered' => User::select('created_at')->orderBy('created_at')->take(100)->get()->groupBy(function($item) {
                     return $item->created_at->format('d.m.Y');
                })
             ],
