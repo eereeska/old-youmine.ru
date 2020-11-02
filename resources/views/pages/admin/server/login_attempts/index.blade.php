@@ -2,7 +2,7 @@
 @section('content')
 <div class="content">
     <input id="search-query" type="text" placeholder="Введите фразу для поиска и нажмите Enter" autocomplete="off" class="mb-40">
-    <table id="search-table">
+    <table id="search-table" class="striped">
         <thead>
             <tr>
                 <th class="text-left">Пользователь</th>

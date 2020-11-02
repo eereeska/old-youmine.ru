@@ -32,13 +32,13 @@ class LoginAttemptsController extends Controller
             return response()->json([
                 'success' => true,
                 'html' => view('pages.admin.server.login_attempts.list', [
-                    'attempts' => ServerLoginAttempt::whereIn('user_id', $users_matches)->with('user')->take(50)->orderBy('created_at', 'desc')->get()
+                    'attempts' => ServerLoginAttempt::whereIn('user_id', $users_matches)->orWhere('name', 'like', '%' . $r->searchQuery . '%')->with('user')->take(50)->orderBy('created_at', 'desc')->get()
                 ])->render()
             ]);
         }
 
         return view('pages.admin.server.login_attempts.index', [
-            'attempts' => ServerLoginAttempt::where('user_id', '<>', null)->orderBy('created_at', 'desc')->take(50)->with('user')->get()
+            'attempts' => ServerLoginAttempt::orderBy('created_at', 'desc')->take(50)->with('user')->get()
         ]);
     }
 }

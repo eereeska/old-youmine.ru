@@ -11,6 +11,7 @@ class LoginAttemptListener implements ShouldQueue
     {
         ServerLoginAttempt::create([
             'user_id' => $event->user->id ?? null,
+            'name' => $event->name,
             'ip' => $event->ip
         ]);
     }

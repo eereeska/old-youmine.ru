@@ -14,7 +14,7 @@ class AuthController extends Controller
     {
         $user = User::where('ip', $r->ip)->first();
 
-        event(new LoginAttemptEvent($user, $r->ip));
+        event(new LoginAttemptEvent($user, $r->name, $r->ip));
 
         if (!$user) {
             return response()->json([

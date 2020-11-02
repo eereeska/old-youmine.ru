@@ -11,11 +11,13 @@ class LoginAttemptEvent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $user;
+    public $name;
     public $ip;
 
-    public function __construct($user, $ip)
+    public function __construct($user, $name, $ip)
     {
         $this->user = $user;
+        $this->name = $name;
         $this->ip = $ip;
     }
 }

@@ -10,6 +10,7 @@ class ServerLoginAttempt extends Model
 
     protected $fillable = [
         'user_id',
+        'name',
         'ip'
     ];
 

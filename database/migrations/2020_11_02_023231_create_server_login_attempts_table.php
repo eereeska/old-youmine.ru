@@ -11,6 +11,7 @@ class CreateServerLoginAttemptsTable extends Migration
         Schema::create('server_login_attempts', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->unsigned()->nullable();
+            $table->string('name');
             $table->string('ip');
             $table->timestamps();
         });
