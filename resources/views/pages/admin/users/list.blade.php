@@ -9,8 +9,7 @@
     </td>
     <td class="text-left">{{ $user->name }}</td>
     <td class="text-left">{{ $user->balance }} {{ trans_choice('коин|коина|коинов', $user->balance, [], 'ru') }}</td>
-    <td class="text-left">{{ $user->country ?? 'Неизвестно' }}</td>
-    <td class="text-left">{{ $user->ip }}</td>
-    <td class="text-right">{{ $user->created_at->format('H:i:s d.m.Y') }}</td>
+    <td class="text-left" title="{{ $user->ip }}">{{ $user->country ?? 'Неизвестно' }}</td>
+    <td class="text-right" title="{{ $user->created_at->format('d.m.Y H:i:s') }}">{{ $user->created_at->format('d.m.Y') }}</td>
 </tr>
 @endforeach

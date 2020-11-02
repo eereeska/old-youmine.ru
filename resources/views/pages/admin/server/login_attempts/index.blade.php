@@ -6,6 +6,7 @@
         <thead>
             <tr>
                 <th class="text-left">Пользователь</th>
+                <th class="text-center">Никнейм</th>
                 <th class="text-center">IP</th>
                 <th class="text-right">Дата</th>
             </tr>

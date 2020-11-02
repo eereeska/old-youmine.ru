@@ -10,7 +10,6 @@
                 <th class="text-left">Никнейм</th>
                 <th class="text-left">Баланс</th>
                 <th class="text-left">Страна</th>
-                <th class="text-left">IP</th>
                 <th class="text-right">Дата</th>
             </tr>
         </thead>
