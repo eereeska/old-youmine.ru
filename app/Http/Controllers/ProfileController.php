@@ -33,13 +33,13 @@ class ProfileController extends Controller
         }
 
         if ($r->has('lifetime') and $r->boolean('lifetime')) {
-            if ($u->balance < 1000) {
+            if ($u->balance < config('youmine.sub.price.lifetime')) {
                 return response()->json([
                     'message' => 'Недостаточно средств на балансе'
                 ]);
             }
 
-            $u->balance -= 1000;
+            $u->balance -= config('youmine.sub.price.lifetime');
             $u->sub_expire_at = null;
             $u->save();
 
@@ -47,13 +47,13 @@ class ProfileController extends Controller
                 'message' => 'Пожизненная подписка была успешно приобретена'
             ]);
         } else {
-            if ($u->balance < 200) {
+            if ($u->balance < config('youmine.sub.price.month')) {
                 return response()->json([
                     'message' => 'Недостаточно средств на балансе'
                 ]);
             }
             
-            $u->balance -= 200;
+            $u->balance -= config('youmine.sub.price.month');
 
             if ($u->sub_expire_at->lt(now())) {
                 $u->sub_expire_at = now()->addDays(30);
