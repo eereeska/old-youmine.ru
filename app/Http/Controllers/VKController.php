@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Stevebauman\Location\Facades\Location;
 
 class VKController extends Controller
 {
@@ -17,7 +16,7 @@ class VKController extends Controller
     public function login(Request $r)
     {
         if ($r->has('code')) {
-            $token = json_decode(file_get_contents('https://oauth.vk.com/access_token?client_id=' . self::VK_CLIENT_ID . '&client_secret=' . self::VK_SECRET . '&redirect_uri=' . env('VK_REDIRECT', 'http://youmine.loc/login') . '&code=' . $r->code), true);
+            $token = json_decode(file_get_contents('https://oauth.vk.com/access_token?client_id=' . self::VK_CLIENT_ID . '&client_secret=' . self::VK_SECRET . '&redirect_uri=' . config('youmine.vk.redirect') . '&code=' . $r->code), true);
 
             if (isset($token['error'])) {
                 return redirect('/');
@@ -55,7 +54,7 @@ class VKController extends Controller
 
             return redirect()->route('profile');
         } else {
-            return redirect('https://oauth.vk.com/authorize?client_id=' . self::VK_CLIENT_ID . '&display=page&redirect_uri=' . env('VK_REDIRECT', 'http://youmine.loc/login') . '&response_type=code&v=' . self::VK_API_VERSION);
+            return redirect('https://oauth.vk.com/authorize?client_id=' . self::VK_CLIENT_ID . '&display=page&redirect_uri=' . config('youmine.vk.redirect') . '&response_type=code&v=' . self::VK_API_VERSION);
         }
     }
 
