@@ -6,8 +6,8 @@ return [
     ],
     'sub' => [
         'price' => [
-            'month' => 200,
-            'lifetime' => 1000
+            'month' => env('SUB_PRICE_MONTH', 200),
+            'lifetime' => env('SUB_PRICE_LIFETIME', 1000)
         ]
     ]
 ];

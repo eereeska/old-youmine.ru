@@ -132,7 +132,7 @@ body {
     }
 
     @media (max-width: 1040px) {
-        padding: 0 40px;
+        padding: 0 10px;
     }
 }
 
@@ -191,6 +191,8 @@ span {
 table {
     color: var(--color-white-70);
     width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
     transition: opacity 0.2s ease-in-out;
 
     &.loading {
