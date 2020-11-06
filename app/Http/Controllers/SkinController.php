@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class SkinController extends Controller
 {
-    public function index(Request $r)
-    {
-
-    }
-
     public function upload(Request $r)
     {
         $v = Validator::make($r->all(), [
@@ -36,26 +31,21 @@ class SkinController extends Controller
         $file = $r->file('skin');
         $file_contents = file_get_contents($file->path());
 
-        // if (!$user->admin and Skin::where('owner_id', $user->id)->count() > 0) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'У тебя уже есть скин, ожидающий проверки. Пожалуйста, сначала дождись, когда мы проверим его'
-        //     ]);
-        // }
-
         $model = ((imagecolorat(imagecreatefrompng($file->path()), 54, 20) >> 24) & 0x7F == 127) ? 'alex' : 'steve';
 
-        $response = Http::attach('file', $file_contents, 'skin.png')->post('https://api.mineskin.org/generate/upload?visibility=1&name=YouMine&model=' . $model);
+        $mineskin_request = Http::attach('file', $file_contents, 'skin.png')->post('https://api.mineskin.org/generate/upload?visibility=1&name=YouMine&model=' . $model);
 
-        if (!$response->successful()) {
+        if (!$mineskin_request->successful()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Не удалось получить информацию о скине: ' . $response
+                'message' => 'Не удалось получить информацию о скине: ' . $mineskin_request
             ]);
         }
 
-        $texture = $response['data']['texture']['value'];
-        $signature = $response['data']['texture']['signature'];
+        // TODO: Подтверждение скинов
+
+        $texture = $mineskin_request['data']['texture']['value'];
+        $signature = $mineskin_request['data']['texture']['signature'];
 
         $skin = Skin::where('texture', $texture)->where('signature', $signature)->first();
 
@@ -73,7 +63,6 @@ class SkinController extends Controller
 
         $skin = new Skin();
         $skin->owner_id = $user->id;
-        // $skin->confirmed = true; TODO: Подтверждение скинов
         $skin->slim = $model == 'alex';
         $skin->texture = $texture;
         $skin->signature = $signature;
@@ -88,10 +77,6 @@ class SkinController extends Controller
 
         imagepng($av, storage_path('app/public/skins/avatars/' . $skin->id . '.png'));
 
-        // foreach (User::where('admin', true)->where('nn_admin_skin_request', true)->get() as $admin) {
-        //     VKController::sendMessage($admin, 'Новый запрос на добавление скина: ' . route('skin', ['id' => $skin->id]));
-        // }
-
         $user->skin_id = $skin->id;
         $user->save();
 
@@ -100,12 +85,6 @@ class SkinController extends Controller
             'skin' => [
                 'avatar' => url('avatars/' . $skin->id . '.png')
             ]
-            // 'redirect' => route('skins')
         ]);
-    }
-
-    public static function getSkinModel()
-    {
-
     }
 }

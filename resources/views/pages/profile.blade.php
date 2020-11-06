@@ -4,7 +4,7 @@
     @if (!$u->name)
     <div class="box noname p-40 mb-40">
         <h2 class="mb-20">Никнейм не установлен</h2>
-        <p>Войдите на сервер, чтобы<br>установить его</p>
+        <p>Войдите на сервер, чтобы привязать персонажа <br>к текущему аккаунту ВКонтакте</p>
     </div>
     @else
     <div class="box banner flex aic p-40">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="box mt-40">
-        <div class="toggle{{ $serverAccessActive ? ' active' : ''}}" data-action="toggle" data-toggle-type="request" data-toggle-target="serverAccess">
+        <div class="toggle{{ $server_access_active ? ' active' : ''}}" data-action="toggle" data-toggle-type="request" data-toggle-target="serverAccess">
             <h3>Доступ на сервер</h3>
             <p>Сбрасывается при смене IP</p>
         </div>

@@ -661,6 +661,12 @@ input[type=number].lg {
   cursor: pointer;
 }
 
+@media (max-width: 500px) {
+  .toggle {
+    padding-bottom: 120px;
+  }
+}
+
 .toggle:before {
   content: "";
   position: absolute;
@@ -670,7 +676,16 @@ input[type=number].lg {
   height: 40px;
   background-color: var(--color-border);
   border-radius: 100px;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 500px) {
+  .toggle:before {
+    top: unset;
+    right: unset;
+    bottom: 40px;
+    left: 40px;
+  }
 }
 
 .toggle:after {
@@ -682,7 +697,16 @@ input[type=number].lg {
   height: 26px;
   background-color: var(--color-bg);
   border-radius: 100px;
-  transition: right 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 500px) {
+  .toggle:after {
+    top: unset;
+    right: unset;
+    bottom: 47px;
+    left: 47px;
+  }
 }
 
 .toggle.active:before {
@@ -691,6 +715,13 @@ input[type=number].lg {
 
 .toggle.active:after {
   right: 47px;
+}
+
+@media (max-width: 500px) {
+  .toggle.active:after {
+    right: unset;
+    left: 77px;
+  }
 }
 
 .button {

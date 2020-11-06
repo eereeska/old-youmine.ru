@@ -3,6 +3,10 @@
     padding: 40px;
     cursor: pointer;
 
+    @media (max-width: 500px) {
+        padding-bottom: 120px;
+    }
+
     &:before {
         content: '';
         position: absolute;
@@ -12,7 +16,14 @@
         height: 40px;
         background-color: var(--color-border);
         border-radius: 100px;
-        transition: background-color 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+
+        @media (max-width: 500px) {
+            top: unset;
+            right: unset;
+            bottom: 40px;
+            left: 40px;
+        }
     }
 
     &:after {
@@ -24,7 +35,14 @@
         height: 26px;
         background-color: var(--color-bg);
         border-radius: 100px;
-        transition: right 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+
+        @media (max-width: 500px) {
+            top: unset;
+            right: unset;
+            bottom: 47px;
+            left: 47px;
+        }
     }
     
     &.active {
@@ -34,6 +52,11 @@
 
         &:after {
             right: 47px;
+
+            @media (max-width: 500px) {
+                right: unset;
+                left: 77px;
+            }
         }
     }
 }

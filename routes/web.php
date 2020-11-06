@@ -1,14 +1,15 @@
 <?php
 
 use App\Http\Controllers\FrontController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\UnitPayController;
 use App\Http\Controllers\VKController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function() {
+    return view('pages.home');
+})->name('home');
 
 Route::get('/login', [VKController::class, 'login'])->name('login');
 Route::get('/logout', [VKController::class, 'logout'])->name('logout');

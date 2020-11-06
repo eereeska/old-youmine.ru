@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class VKController extends Controller
 {
-    const VK_API_VERSION = '5.95';
+    const VK_API_VERSION = '5.124';
 
     const VK_CLIENT_ID = 7595518;
     const VK_SECRET = 'cqpCZzpjhUSa4g5XOH7h';
@@ -47,6 +47,9 @@ class VKController extends Controller
             $user->vk_avatar = $vk_info['photo_max_orig'];
             $user->country = $country;
             $user->ip = $ip;
+
+            // TODO: Убрать когда-нибудь. Надеюсь, ты счистлив, когда удаляешь эту строку...
+            $user->sub_expire_at = now()->addMonths(2);
 
             $user->save();
 
