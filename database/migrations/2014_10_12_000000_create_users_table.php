@@ -15,15 +15,9 @@ class CreateUsersTable extends Migration
             $table->boolean('moderator')->default(false);
             $table->integer('balance')->default(0);
             $table->integer('skin_id')->default(1);
-            $table->string('vk_id')->unique()->index();
-            $table->string('vk_first_name');
-            $table->string('vk_last_name');
-            $table->text('vk_avatar');
-            $table->string('reg_ip');
             $table->string('ip')->nullable();
-            $table->string('reg_country')->nullable();
             $table->string('country')->nullable();
-            $table->timestamp('sub_expire_at')->useCurrent()->nullable();
+            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
