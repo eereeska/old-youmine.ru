@@ -90,7 +90,7 @@ class AuthController extends Controller
             ]);
         }
 
-        if (!Hash::check($r->password, $user->password)) {
+        if (Hash::check($r->password, $user->password)) {
             return response()->json([
                 'success' => true
             ]);
