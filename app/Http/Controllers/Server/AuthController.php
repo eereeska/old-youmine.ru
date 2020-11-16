@@ -40,7 +40,7 @@ class AuthController extends Controller
         return response()->json([
             'allow' => true,
             'exists' => !!$user,
-            'ip' => $user ? $user->ip : null,
+            'authorized' => $user ? $user->ip === $r->ip : false,
             'skin' => [
                 'texture' => $skin->texture,
                 'signature' => $skin->signature
