@@ -41,8 +41,10 @@ class AuthController extends Controller
             'allow' => true,
             'exists' => !!$user,
             'ip' => $r->ip,
-            'skin_texture' => $skin->texture,
-            'skin_signature' => $skin->signature
+            'skin' => [
+                'texture' => $skin->texture,
+                'signature' => $skin->signature
+            ]
         ]);
     }
 
@@ -52,20 +54,6 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => '§cПользователь с никнеймом "' . $r->name . '" уже зарегистрирован на сервере'
-            ]);
-        }
-
-        $v = Validator::make($r->all(), [
-            'password' => ['required', 'min:6']
-        ], [
-            'password.required' => '§cПароль не указан',
-            'password.min' => '§cМинимальная длинна пароля: 6 символов'
-        ]);
-
-        if ($v->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => $v->errors()->first()
             ]);
         }
 
