@@ -11,7 +11,9 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('pages.profile');
+        return view('pages.profile', [
+            'u' => Auth::user()
+        ]);
     }
 
     public function changePassword(Request $r)
@@ -28,7 +30,7 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors(['change-password' => $v->errors()->first()]);
         }
         
-        $u = Auth::user();
+        $u = $r->user();
 
         if (!Hash::check($r->current, $u->password)) {
             return redirect()->back()->withErrors(['change-password' => 'Неверный текущий пароль']);
