@@ -1,9 +1,11 @@
 @import './global';
 
 @import './components/nav';
+@import './components/alert';
 @import './components/input';
-@import './components/toggle';
+@import './components/box';
 @import './components/button';
-@import './components/select-radio';
 
+@import './pages/home';
+@import './pages/login';
 @import './pages/profile';

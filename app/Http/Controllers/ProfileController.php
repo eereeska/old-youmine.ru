@@ -4,67 +4,43 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
-    public function index(Request $r)
+    public function index()
     {
-        $u = Auth::user();
-
-        return view('pages.profile', [
-            'u' => $u,
-            'server_access_active' => ($_SERVER['HTTP_CF_CONNECTING_IP'] ?? $r->ip()) === $u->ip
-        ]);
+        return view('pages.profile');
     }
 
-    public function purchaseSubscription(Request $r)
+    public function changePassword(Request $r)
     {
-        if (!$r->ajax()) {
-            return redirect()->back();
+        $v = Validator::make($r->all(), [
+            'current' => ['required'],
+            'new' => ['required']
+        ], [
+            'current.required' => 'Не указан текущий пароль',
+            'new.required' => 'Не указан новый пароль',
+        ]);
+
+        if ($v->fails()) {
+            return redirect()->back()->withErrors(['change-password' => $v->errors()->first()]);
+        }
+        
+        $u = Auth::user();
+
+        if (!Hash::check($r->current, $u->password)) {
+            return redirect()->back()->withErrors(['change-password' => 'Неверный текущий пароль']);
         }
 
-        $u = $r->user();
-
-        if ($u->admin || $u->moderator || is_null($u->sub_expire_at)) {
-            return response()->json([
-                'message' => 'У Вас и так пожизненная подписка'
-            ]);
+        if (strlen($r->new) < 6) {
+            return redirect()->back()->withErrors(['change-password' => 'Минимальная длинна пароля: 6 символов']);
         }
 
-        if ($r->has('lifetime') and $r->boolean('lifetime')) {
-            if ($u->balance < config('youmine.sub.price.lifetime')) {
-                return response()->json([
-                    'message' => 'Недостаточно средств на балансе'
-                ]);
-            }
+        $u->password = Hash::make($r->new);
+        $u->save();
 
-            $u->balance -= config('youmine.sub.price.lifetime');
-            $u->sub_expire_at = null;
-            $u->save();
-
-            return response()->json([
-                'message' => 'Пожизненная подписка была успешно приобретена'
-            ]);
-        } else {
-            if ($u->balance < config('youmine.sub.price.month')) {
-                return response()->json([
-                    'message' => 'Недостаточно средств на балансе'
-                ]);
-            }
-            
-            $u->balance -= config('youmine.sub.price.month');
-
-            if ($u->sub_expire_at->lt(now())) {
-                $u->sub_expire_at = now()->addDays(30);
-            } else {
-                $u->sub_expire_at = $u->sub_expire_at->addDays(30);
-            }
-
-            $u->save();
-
-            return response()->json([
-                'message' => 'Подписка была продлена до ' . $u->sub_expire_at->format('d-m-Y')
-            ]);
-        }
+        return redirect()->back()->with('change-password', 'Пароль был успешно изменён');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkinController;
@@ -11,15 +12,16 @@ Route::get('/', function() {
     return view('pages.home');
 })->name('home');
 
-Route::get('/login', [VKController::class, 'login'])->name('login');
-Route::get('/logout', [VKController::class, 'logout'])->name('logout');
+Route::get('/login', [AuthController::class, 'index'])->middleware('guest')->name('login');
+Route::post('/login', [AuthController::class, 'login'])->middleware('guest')->name('login-post');
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
 Route::get('/unitpay/check', [UnitPayController::class, 'check']);
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    Route::get('/profile/purchase/sub', [ProfileController::class, 'purchaseSubscription'])->name('profile-purchase-sub');
     Route::get('/deposit', [UnitPayController::class, 'deposit'])->name('deposit');
+    Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('change-password');
 });
 
 

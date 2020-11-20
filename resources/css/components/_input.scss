@@ -1,14 +1,14 @@
-input[type="text"],
-input[type="number"] {
+input {
     font-family: 'Nunito', Arial, Helvetica, sans-serif;
     font-weight: 400;
     font-size: 1rem;
-    color: var(--color-white);
+    color: var(--text-secondary-color);
     width: 100%;
     background: unset;
     background-color: unset;
-    border: unset;
-    padding-bottom: 15px;
+    border: 2px solid var(--lg);
+    border-radius: 15px;
+    padding: 30px;
     outline: unset;
     appearance: none;
 
@@ -23,23 +23,10 @@ input[type="number"] {
     }
 
     &::placeholder {
-        color: var(--color-white-50);
+        color: var(--text-input-placeholder-color);
     }
 
-    &.underline {
-        border-bottom: 2px solid var(--color-border);
-        transition: border-bottom 0.2s ease-in-out;
-
-        &:focus {
-            border-bottom: 2px solid var(--color-white-70);
-        }
-    }
-
-    &.v1 {
-        padding: 15px 0px;
-    }
-
-    &.lg {
-        padding: 40px;
+    &:not([type="hidden"]) + input {
+        margin-top: 20px;
     }
 }

@@ -1,0 +1,13 @@
+p.alert {
+    color: var(--tp);
+    padding: 30px;
+    border-radius: 15px;
+
+    &.red {
+        background-color: var(--r);
+    }
+
+    &.green {
+        background-color: var(--gn);
+    }
+}

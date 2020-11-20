@@ -1,69 +1,40 @@
 @extends('layouts.app')
 @section('content')
-<div class="content profile">
-    @if (!$u->name)
-    <div class="box noname p-40 mb-40">
-        <h2 class="mb-20">Никнейм не установлен</h2>
-        <p>Войдите на сервер, чтобы привязать персонажа <br>к текущему аккаунту ВКонтакте</p>
-    </div>
-    @else
-    <div class="box banner flex aic p-40">
-        <div id="skin-upload" class="avatar" style="background-image: url({{ url('avatars/' . $u->skin_id . '.png') }})"></div>
-        <input id="skin-upload-input" type="file" name="skin" accept="image/x-png" style="display: none;" hidden />
-        <div class="info">
-            <h2 class="mb-10">{{ $u->name ?? 'Ноунейм' }}</h2>
-            <p>{{ $u->admin ? 'Администратор' : ($u->moderator ? 'Модератор' : 'Игрок') }}</p>
-        </div>
-    </div>
-    @endif
-    <div class="grid cols-2 gap-40 stats mt-40">
-        <div class="box subscription p-40">
-            @if (($u->admin or $u->moderator) or is_null($u->sub_expire_at))
-            <h3>Пожизненная</h3>
-            <p>Подписка</p>
-            @else
-            <div class="visible">
-                @if ($u->admin or $u->moderator)
-                <h3>Пожизненная</h3>
-                @elseif (now()->lt($u->sub_expire_at))
-                <h3>До {{ $u->sub_expire_at->format('d-m-Y') }}</h3>
-                @else
-                <h3>Отсутствует</h3>
-                @endif
-                <p>Подписка</p>
-            </div>
-            <div class="hidden">
-                <div class="choice cols-2 text-center">
-                    <div class="left">
-                        @if (now()->gte($u->sub_expire_at))
-                        <a href="{{ route('profile-purchase-sub') }}" data-action="request" data-request-callback="alert">Купить на месяц<br><span class="coins">{{ config('youmine.sub.price.month') }} {{ trans_choice('коин|коина|коинов', config('youmine.sub.price.month'), [], 'ru') }}</span></a>
-                        @else
-                        <a href="{{ route('profile-purchase-sub') }}" data-action="request" data-request-callback="alert">Продлить на месяц<br><span class="coins">{{ config('youmine.sub.price.month') }} {{ trans_choice('коин|коина|коинов', config('youmine.sub.price.month'), [], 'ru') }}</span></a>
-                        @endif
-                    </div>
-                    <div class="right">
-                        <a href="{{ route('profile-purchase-sub', ['lifetime' => true]) }}" data-action="request" data-request-callback="alert">Купить навсегда<br><span class="coins">{{ config('youmine.sub.price.lifetime') }} {{ trans_choice('коин|коина|коинов', config('youmine.sub.price.month'), [], 'ru') }}</span></a>
-                    </div>
-                </div>
-            </div>
-            @endif
-        </div>
-        <div class="box balance p-40">
-            <div class="visible">
-                <h3>{{ $u->balance }} {{ trans_choice('коин|коина|коинов', $u->balance, [], 'ru') }}</h3>
-                <p>Баланс</p>
-            </div>
-            <div class="hidden centered d-column pl-40 pr-40">
-                <input id="deposit-input" name="balance-input" type="number" class="underline" placeholder="Введите сумму в рублях и нажмите Enter" data-redirect="{{ route('deposit') }}">
-                <span id="deposit-coins-sum" class="coins mt-20">1 рубль = 2 коина</span>
-            </div>
-        </div>
-    </div>
-    <div class="box mt-40">
-        <div class="toggle{{ $server_access_active ? ' active' : ''}}" data-action="toggle" data-toggle-type="request" data-toggle-target="serverAccess">
-            <h3>Доступ на сервер</h3>
-            <p>Сбрасывается при смене IP</p>
-        </div>
-    </div>
-</div>
+<main class="profile">
+	<div class="preview box flex fw-w aic jcsb g-30">
+		<div class="flex aic">
+			<div id="upload-skin" class="avatar" style="background-image: url({{ asset('avatars/' . $u->skin_id . '.png') }})"></div>
+			<input type="file" name="skin" id="upload-skin-input" accept="image/png" style="display: none" hidden>
+			<div class="info">
+				<h3>{{ $u->name }}</h3>
+				<p>Игрок</p>
+			</div>
+		</div>
+		<div class="flex">
+			<a href="{{ route('logout') }}" class="button md">Выйти</a>
+		</div>
+	</div>
+	<div class="balance box flex fw-w aic jcsb g-30">
+		<div class="status">
+			<h4 class="value">{{ $u->balance }} {{ trans_choice('кредит|кредита|кредитов', $u->balance, [], 'ru') }}</h4>
+			<p>Баланс</p>
+		</div>
+		<button id="deposit" class="button md" data-redirect="{{ route('deposit') }}">Пополнить</button>
+	</div>
+	<div class="password-change box">
+		<form action="{{ route('change-password') }}" method="POST">
+			<h5>Смена пароля</h5>
+			@if ($message = session()->get('change-password'))
+			<p class="alert green mb-30">{{ $message }}</p>
+			@endif
+			@error('change-password')
+				<p class="alert red mb-30">{{ $message }}</p>
+			@enderror
+			{{ csrf_field() }}
+			<input type="password" name="current" placeholder="Текущий пароль">
+			<input type="password" name="new" placeholder="Новый пароль">
+			<button type="submit" class="button lg mt-30">Сменить</button>
+		</form>
+	</div>
+</main>
 @endsection

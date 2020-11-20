@@ -11,7 +11,7 @@ class ServerOnly
     {
         $ip = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $request->ip();
 
-        if ($ip !== '127.0.0.1' and $ip !== '81.26.6.6' and $ip !== '178.120.56.51') {
+        if ($ip !== '127.0.0.1' and $ip !== '178.120.56.51') {
             abort(404);
         }
         

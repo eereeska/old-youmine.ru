@@ -1,0 +1,10 @@
+div.box {
+    background-color: var(--g);
+    border-radius: 15px;
+    padding: 30px;
+    overflow: hidden;
+
+    & + div.box {
+        margin-top: 30px;
+    }
+}
