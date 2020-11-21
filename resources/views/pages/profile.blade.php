@@ -31,8 +31,8 @@
 				<p class="alert red mb-30">{{ $message }}</p>
 			@enderror
 			{{ csrf_field() }}
-			<input type="password" name="current" placeholder="Текущий пароль">
-			<input type="password" name="new" placeholder="Новый пароль">
+			<input type="password" name="current" placeholder="Текущий пароль" required>
+			<input type="password" name="new" placeholder="Новый пароль" required>
 			<button type="submit" class="button lg mt-30">Сменить</button>
 		</form>
 	</div>
